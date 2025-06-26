@@ -12,16 +12,17 @@ async function bootstrap() {
   app.useGlobalInterceptors(new LoggingInterceptor())
   app.setGlobalPrefix(`api`);
 
-  await app.listen(appSettings.port, '0.0.0.0');
-  if (_.isEqual(process.env.DEVELOPMENT, 'true')) {
+  if (_.isEqual(appSettings.isDevelopment, 'true')) {
     const config = new DocumentBuilder()
       .setTitle('MGE Document')
       .setVersion('2.0')
       .build();
 
     const document = SwaggerModule.createDocument(app, config);
+    console.log("🚀 ~ bootstrap ~ document:", document)
     SwaggerModule.setup('swagger', app, document);
   }
+  await app.listen(appSettings.port, '0.0.0.0');
 
   app.useGlobalFilters(new SystemErrorExceptionFilter());
   console.log(await app.getUrl());

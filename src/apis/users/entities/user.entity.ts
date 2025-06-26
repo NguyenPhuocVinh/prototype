@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import moment from 'moment-timezone';
-import { Types } from "mongoose";
-import { COLLECTION_NAME } from "src/common/contants/enum";
+import { Document, Types } from "mongoose";
+import { COLLECTION_NAME } from "src/cores/__schema__/configs/enum";
 import { cleanAccents, rawString } from "src/common/func-helper/string";
 import { AggregateRootMixin } from "src/common/models/root/aggregate-root";
 import { RelationRoot } from "src/common/models/root/relation-root";
@@ -16,7 +16,7 @@ import { appSettings } from "src/configs/app.config";
         collection: COLLECTION_NAME.USER
     }
 )
-export class User extends AggregateRootMixin(Document) {
+export class User extends Document {
     @Prop({ type: String, required: true, unique: true })
     phone: string;
 
@@ -40,9 +40,6 @@ export class User extends AggregateRootMixin(Document) {
 
     @Prop({ type: Object })
     roles: RelationRoot[]
-
-    @Prop({ type: [Types.ObjectId], ref: COLLECTION_NAME.TENANT })
-    tenants: Types.ObjectId[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
@@ -69,9 +66,8 @@ UserSchema.index(
 );
 
 UserSchema.pre('save', function (next) {
-    this.full_name = rawString(this.last_name + ' ' + this.first_name);
+    this.fullName = rawString(this.lastName + ' ' + this.firstName);
 
-    this.name_kodau = cleanAccents(this.last_name + ' ' + this.first_name);
     if (this.email) {
         this.email = this.email.toLowerCase();
     }

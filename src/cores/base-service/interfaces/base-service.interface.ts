@@ -5,16 +5,14 @@ import { CreatedBy } from "src/common/models/root/created-by-root";
 export interface IBaseService<T> {
     create(
         payload: any,
-        locale: string,
         user: CreatedBy
     ): Promise<{ data: T | null }>;
     findOne(
         id: string,
-        locale: string
     ): Promise<{ data: T | null }>;
     findAll(
         queryParams: PagingDto,
-        locale: string
+        user?: CreatedBy
     ): Promise<{
         data: T[];
         meta: Meta
@@ -22,7 +20,7 @@ export interface IBaseService<T> {
     update(
         id: string,
         payload: any,
-        locale: string
+        user?: CreatedBy
     ): Promise<T | null>;
     delete(
         id: string,
@@ -32,4 +30,6 @@ export interface IBaseService<T> {
         ids: string[],
         ...args: any[]
     ): Promise<any>;
+    isExist(options: {}): Promise<any>;
+    findById(id: string): Promise<{ data: T | null }>;
 }

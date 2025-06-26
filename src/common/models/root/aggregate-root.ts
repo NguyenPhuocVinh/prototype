@@ -1,7 +1,7 @@
 import { Prop, Schema } from "@nestjs/mongoose";
 import { CreatedByRoot } from "./created-by-root";
 import { appSettings } from "src/configs/app.config";
-import { COLLECTION_NAME } from "src/common/contants/enum";
+import { COLLECTION_NAME } from "src/cores/__schema__/configs/enum";
 import { Property } from "src/cores/decorators/property.decorator";
 import { Types } from "mongoose";
 

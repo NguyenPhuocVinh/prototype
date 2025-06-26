@@ -42,7 +42,6 @@ export class RouterModule {
 
         );
 
-        console.log("🚀 ~ RouterModule ~ forRoot ~ imports:", JSON.stringify(imports))
         return {
             module: RouterModule,
             providers: [],

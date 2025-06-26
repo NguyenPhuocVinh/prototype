@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { RelationRoot } from "./relation-root";
 
 export class CreatedBy {
     _id: Types.ObjectId;
@@ -6,11 +7,11 @@ export class CreatedBy {
     last_name: string;
     first_name: string;
     email: string;
-    // roles: RelationRoot[];
+    roles: RelationRoot[];
     rules?: number[];
     rulePermissions?: { [key: string]: string };
     // tenant: ITenant[];
-    tenant: string;
+    tenants: any;
 }
 
 
