@@ -17,6 +17,9 @@ import { appSettings } from "src/configs/app.config";
     }
 )
 export class User extends Document {
+    @Prop({ type: String, unique: true })
+    userName: string;
+
     @Prop({ type: String, required: true, unique: true })
     phone: string;
 
@@ -36,26 +39,32 @@ export class User extends Document {
     fullName: string;
 
     @Prop({ type: Date })
-    birthDay: Date;
+    birthDate: Date;
 
-    @Prop({ type: Object })
-    roles: RelationRoot[]
+    @Prop({ type: String })
+    idCode: string;
+
+    @Prop({ type: String })
+    dateOfIssue: Date;
+
+    @Prop({ type: Types.ObjectId, ref: COLLECTION_NAME.ROLE })
+    role: Types.ObjectId;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
 UserSchema.index(
     {
-        full_name: 'text',
-        last_name: 'text',
-        first_name: 'text',
+        fullName: 'text',
+        lastName: 'text',
+        firstName: 'text',
         email: 'text',
     },
     {
         weights: {
-            full_name: 10,
-            last_name: 5,
-            first_name: 5,
+            fullName: 10,
+            lastName: 5,
+            firstName: 5,
             email: 3,
             ldapUser: 1,
             mbCode: 1,

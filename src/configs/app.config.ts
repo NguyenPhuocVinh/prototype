@@ -7,6 +7,7 @@ export const appSettings = {
     apiVersion: process.env.VERSION,
     languages: process.env.LANGUAGES ? process.env.LANGUAGES.split(',') : [],
     isDevelopment: process.env.DEVELOPMENT,
+    appUrl: process.env.APP_URL,
     jwt: {
         secret: process.env.JWT_SECRET,
         expiresIn: process.env.JWT_EXPIRES_IN,

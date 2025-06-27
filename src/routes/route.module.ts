@@ -22,7 +22,7 @@ export class RouterModule {
             RoutesAdminModule,
             NestJsRouterModule.register([
                 {
-                    path: `/v${apiVersion}`,
+                    path: ``,
                     children: [
                         {
                             path: ``,

@@ -15,9 +15,13 @@ export const AggregateRootMixin = <T extends new (...args: any[]) => any>(
         @Prop()
         slug: string;
 
-        @Property({ type: String.name })
-        @Prop({ index: true, enum: appSettings.languages })
-        locale: string;
+        @Property({ type: Boolean.name })
+        @Prop({ default: true })
+        isActive: number;
+
+        @Property({ type: Boolean.name })
+        @Prop({ type: Boolean, default: false })
+        isDeleted: boolean;
 
         @Property({ type: CreatedByRoot.name, ref: COLLECTION_NAME.USER })
         @Prop({ type: Object, default: {} })
@@ -27,9 +31,13 @@ export const AggregateRootMixin = <T extends new (...args: any[]) => any>(
         @Prop({ type: Object, default: {} })
         updatedBy: CreatedByRoot;
 
-        @Property({ type: Types.ObjectId.name, ref: COLLECTION_NAME.TENANT })
-        @Prop({ type: Types.ObjectId, ref: COLLECTION_NAME.TENANT })
-        tenant: Types.ObjectId;
+        @Property({ type: CreatedByRoot.name, ref: COLLECTION_NAME.USER })
+        @Prop({ type: Object, default: {} })
+        deletedBy: CreatedByRoot;
+
+        @Property({ type: Date })
+        @Prop({ type: Date, default: null })
+        deletedAt: Date | null;
     }
     return AggregateRoot as typeof AggregateRoot & T;
 }

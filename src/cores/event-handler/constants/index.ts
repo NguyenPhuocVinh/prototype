@@ -12,3 +12,12 @@ export enum DELETE_RELATION_EVENT_TITLE {
     DELETE_RELATIONS_ALL = 'delete-relation.*',
     DELETE_RELATION_MEDIA = 'delete-relation.media',
 }
+
+export enum AUDIT_EVENT {
+    GET = 'GET',
+    CREATED = 'CREATED',
+    UPDATED = 'UPDATED',
+    DELETED = 'DELETED',
+    UPLOAD_FILE_FRONT = 'UPLOAD_FILE_FRONT',
+}
+

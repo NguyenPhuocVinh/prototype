@@ -15,13 +15,12 @@ import { AuthController } from "src/apis/auth/auth.controller";
         RolesModule,
         RulesModule,
         PermissionsModule,
-        AuthModule,
     ],
     controllers: [
-        AuthController,
         RolesController,
         PermissionsController,
         RulesController,
     ],
 })
+
 export class RoutesAdminModule extends RoutesFrontModule { }

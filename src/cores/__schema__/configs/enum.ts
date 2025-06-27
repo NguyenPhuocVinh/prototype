@@ -1,12 +1,14 @@
 export enum COLLECTION_NAME {
     USER = 'users',
-    ROLE = 'uoles',
-    PERMISSION = 'uermissions',
+    ROLE = 'roles',
+    PERMISSION = 'permissions',
     TENANT = 'tenants',
     ENTITIES = 'entities',
     GROUP_ENTITY = 'groupEntities',
     STORE = 'stores',
     FILE = 'files',
+    RULE = 'rules',
+    AUDIT = 'audits',
 }
 
 export enum TENANT_TYPE {

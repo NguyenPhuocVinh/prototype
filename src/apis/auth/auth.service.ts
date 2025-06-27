@@ -40,12 +40,10 @@ export class AuthService {
             ...tokens,
             user: {
                 _id: user._id,
-                id: user.id,
-                first_name: user.first_name,
-                last_name: user.last_name,
+                first_name: user.firstName,
+                last_name: user.lastName,
                 email: user.email,
-                roles: user.roles,
-                tenants: user.tenants,
+                role: user.role,
             },
         }
     }

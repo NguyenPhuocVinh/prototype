@@ -49,6 +49,8 @@ export const mongooseTransactionHandler = async <T = any>(
                 onError(error);
             }
         }
+
+        return result;
     }
 
     if (isReplicaSet) {

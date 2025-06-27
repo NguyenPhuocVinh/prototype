@@ -31,7 +31,7 @@ export class BaseService<T extends Document> implements IBaseService<T> {
     async create(
         payload: any,
         user: CreatedBy
-    ): Promise<{ data: T }> {
+    ): Promise<{ data: T } | any> {
         const result = new this.model(
             {
                 ...payload,
