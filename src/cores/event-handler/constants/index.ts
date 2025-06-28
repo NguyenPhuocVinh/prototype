@@ -21,3 +21,9 @@ export enum AUDIT_EVENT {
     UPLOAD_FILE_FRONT = 'UPLOAD_FILE_FRONT',
 }
 
+export enum UPLOAD {
+    IMAGE = 'upload-image',
+    BASE64_IMAGE = 'upload-base64-image',
+    TYPE = 'upload'
+}
+

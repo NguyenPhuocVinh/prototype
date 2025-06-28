@@ -81,7 +81,7 @@ export class BaseRepositoryService<T extends Document> {
 
         for (const collection of collections) {
             const { _id } = collection;
-            if (this.collectionName === COLLECTION_NAME.FILE) {
+            if (this.collectionName === COLLECTION_NAME.MEDIA) {
                 this.eventEmitter.emit(
                     UPDATE_RELATION_EVENT_TITLE.UPDATE_RELATION_MEDIA,
                     {
@@ -127,12 +127,12 @@ export class BaseRepositoryService<T extends Document> {
             return;
         }
 
-        if (this.collectionName === COLLECTION_NAME.FILE) {
+        if (this.collectionName === COLLECTION_NAME.MEDIA) {
             this.eventEmitter.emit(
                 DELETE_RELATION_EVENT_TITLE.DELETE_RELATION_MEDIA,
                 {
                     ids,
-                    collectionName: COLLECTION_NAME.FILE,
+                    collectionName: COLLECTION_NAME.MEDIA,
                 },
             );
             return collections;
@@ -155,7 +155,7 @@ export class BaseRepositoryService<T extends Document> {
         if (!collection) {
             return;
         }
-        if (this.collectionName === COLLECTION_NAME.FILE) {
+        if (this.collectionName === COLLECTION_NAME.MEDIA) {
             this.eventEmitter.emit(
                 UPDATE_RELATION_EVENT_TITLE.UPDATE_RELATION_MEDIA,
                 {

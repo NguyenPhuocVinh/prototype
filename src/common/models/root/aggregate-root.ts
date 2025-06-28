@@ -17,7 +17,7 @@ export const AggregateRootMixin = <T extends new (...args: any[]) => any>(
 
         @Property({ type: Boolean.name })
         @Prop({ default: true })
-        isActive: number;
+        isActive: boolean;
 
         @Property({ type: Boolean.name })
         @Prop({ type: Boolean, default: false })

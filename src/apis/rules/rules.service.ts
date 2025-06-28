@@ -4,7 +4,7 @@ import { Rule } from './entities/rule.entity';
 import { BaseRepositoryService } from 'src/cores/base-service/repository.service';
 import { COLLECTION_NAME } from 'src/cores/__schema__/configs/enum';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
-import { Connection, Model } from 'mongoose';
+import { Connection, Model, Types } from 'mongoose';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { CreateRuleDto } from './dto/create-rule.dto';
 import { CreatedBy } from 'src/common/models/root/created-by-root';
@@ -60,5 +60,24 @@ export class RulesService extends BaseService<Rule> {
         return {
             data: result,
         };
+    }
+
+    async findRuleIds(ids: string[]): Promise<Types.ObjectId[]> {
+        if (!ids || ids.length === 0) {
+            return [];
+        }
+
+        const rules = await this.ruleModel.find({
+            _id: { $in: ids },
+        });
+
+        if (rules.length !== ids.length) {
+            throw new UnprocessableEntityException(
+                'rule_not_found',
+                'Some rules not found',
+            );
+        }
+
+        return rules.map((rule) => rule._id as Types.ObjectId);
     }
 }

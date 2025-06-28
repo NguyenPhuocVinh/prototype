@@ -12,6 +12,11 @@ import { Type } from 'class-transformer';
 import { RelationRoot } from 'src/common/models/root/relation-root';
 
 export class CreateUserDto {
+    @ApiProperty({ example: 'username' })
+    @IsString()
+    @IsNotEmpty()
+    userName: string;
+
     @ApiProperty({ example: '0901234567' })
     @IsString()
     @IsNotEmpty()

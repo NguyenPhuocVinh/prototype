@@ -6,9 +6,10 @@ export enum COLLECTION_NAME {
     ENTITIES = 'entities',
     GROUP_ENTITY = 'groupEntities',
     STORE = 'stores',
-    FILE = 'files',
+    MEDIA = 'medias',
     RULE = 'rules',
     AUDIT = 'audits',
+    CATEGORY = 'categories',
 }
 
 export enum TENANT_TYPE {

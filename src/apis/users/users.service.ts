@@ -2,12 +2,13 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { BaseService } from 'src/cores/base-service/base.service';
 import { User } from './entities/user.entity';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
-import { Connection, Model } from 'mongoose';
+import { Connection, Model, Types } from 'mongoose';
 import { COLLECTION_NAME } from 'src/cores/__schema__/configs/enum';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { CreatedBy } from 'src/common/models/root/created-by-root';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../auth/dto/create-user.dto';
+import { RolesService } from '../roles/roles.service';
 @Injectable()
 export class UsersService extends BaseService<User> {
     constructor(
@@ -15,6 +16,7 @@ export class UsersService extends BaseService<User> {
         public readonly connection: Connection,
         @InjectModel(COLLECTION_NAME.USER)
         private readonly userModel: Model<User>,
+        private readonly roleService: RolesService,
         eventEmitter: EventEmitter2
     ) {
         super(
@@ -28,11 +30,11 @@ export class UsersService extends BaseService<User> {
     async create(
         createUserDto: CreateUserDto,
     ): Promise<{ data: User; }> {
-        const count = await this.userModel.countDocuments()
-
+        const role = await this.roleService.findRoleBySlug('users')
         const result = new this.userModel({
             ...createUserDto,
             password: await bcrypt.hash(createUserDto.password, 10),
+            role: role._id,
         })
 
         await result.save();

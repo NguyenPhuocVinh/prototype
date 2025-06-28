@@ -15,6 +15,7 @@ import { RuleSchema } from './entities/rule.entity';
     ])
   ],
   controllers: [RulesController],
-  providers: [RulesService]
+  providers: [RulesService],
+  exports: [RulesService],
 })
 export class RulesModule { }

@@ -59,7 +59,7 @@ export class BaseService<T extends Document> implements IBaseService<T> {
         const { select } = queryParams || {};
 
         const filterQuery = {
-            id,
+            _id: id,
             ...option,
         };
 

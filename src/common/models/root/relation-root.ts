@@ -56,7 +56,6 @@ export class RelationRoot {
 
 export const relationRootPick = [
     '_id',
-    'id',
     'slug',
     'title',
     'name',

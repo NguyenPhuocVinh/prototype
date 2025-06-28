@@ -17,5 +17,12 @@ export const appSettings = {
     mongoose: {
         uri: process.env.MONGO_URI,
         isReplicaSet: process.env.IS_REPLICA_SET,
-    }
+    },
+    cloudinary: {
+        cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+        apiKey: process.env.CLOUDINARY_API_KEY,
+        apiSecret: process.env.CLOUDINARY_API_SECRET,
+        folder: process.env.CLOUDINARY_FOLDER,
+        url: process.env.CLOUDINARY_PUBLIC,
+    },
 }

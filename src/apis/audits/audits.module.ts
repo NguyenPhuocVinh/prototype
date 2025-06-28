@@ -4,6 +4,9 @@ import { AuditsService } from './audits.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { COLLECTION_NAME } from 'src/cores/__schema__/configs/enum';
 import { AuditSchema } from './entities/audit.entity';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { AuditsInterceptor } from 'src/cores/interceptors/audits.interceptor';
+import { AuditLogEvent } from 'src/cores/event-handler/audits/audit-logs.event';
 
 @Module({
   imports: [
@@ -15,6 +18,13 @@ import { AuditSchema } from './entities/audit.entity';
     ])
   ],
   controllers: [AuditsController],
-  providers: [AuditsService]
+  providers: [
+    AuditsService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: AuditsInterceptor,
+    },
+    AuditLogEvent,
+  ]
 })
 export class AuditsModule { }

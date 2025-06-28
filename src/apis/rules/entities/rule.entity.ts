@@ -20,9 +20,9 @@ export class Rule extends AggregateRootMixin(Document) {
     @Prop({ type: String, required: true })
     name: string;
 
-    @Property({ type: Number.name })
-    @Prop({ type: Number, required: true })
-    type: number;
+    @Property({ type: String.name })
+    @Prop({ type: String })
+    description: string;
 }
 
 export const RuleSchema = SchemaFactory.createForClass(Rule);

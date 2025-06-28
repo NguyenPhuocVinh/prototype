@@ -35,7 +35,10 @@ export class AuditsService extends BaseService<Audit> {
                 targetType,
             );
         }
-        return await audit.save();
+        const result = await audit.save();
+        return {
+            data: result,
+        }
     }
 
     async findOldData(targetId: string, targetType: string) {
@@ -59,5 +62,39 @@ export class AuditsService extends BaseService<Audit> {
             .limit(1);
 
         return result?.newValues || {};
+    }
+
+    async findAllDataChange(fromDate: Date, toDate: Date) {
+        const data = await this.auditsModel
+            .find({
+                $and: [
+                    {
+                        created_at: {
+                            $gte: fromDate,
+                            $lte: toDate,
+                        },
+                        event: {
+                            $in: [
+                                AUDIT_EVENT.CREATED,
+                                AUDIT_EVENT.UPDATED,
+                                AUDIT_EVENT.DELETED,
+                            ],
+                        },
+                    },
+                ],
+            })
+            .sort({ createdAt: -1 });
+
+        return data;
+    }
+
+    async countUserRequest(userAgent: string, ipAddress: string) {
+        return await this.auditsModel
+            .find({
+                event: AUDIT_EVENT.UPLOAD_FILE_FRONT,
+                ip_address: ipAddress,
+                user_agent: userAgent,
+            })
+            .countDocuments();
     }
 }

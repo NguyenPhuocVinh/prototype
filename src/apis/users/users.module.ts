@@ -4,6 +4,7 @@ import { UsersService } from './users.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { COLLECTION_NAME } from 'src/cores/__schema__/configs/enum';
 import { UserSchema } from './entities/user.entity';
+import { RolesModule } from '../roles/roles.module';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { UserSchema } from './entities/user.entity';
         name: COLLECTION_NAME.USER,
         schema: UserSchema
       },
-    ])
+    ]),
+    RolesModule
   ],
   controllers: [UsersController],
   providers: [UsersService],

@@ -1,6 +1,6 @@
 import { Injectable, Logger, UnprocessableEntityException } from '@nestjs/common';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
-import { Connection, Model } from 'mongoose';
+import { Connection, Model, Types } from 'mongoose';
 import { COLLECTION_NAME } from 'src/cores/__schema__/configs/enum';
 import { Permissions } from './entities/permission.entity';
 import { CreatePermissionDto } from './dto/create-permission.dto';
@@ -58,5 +58,25 @@ export class PermissionsService {
         );
 
         return permissions;
+    }
+
+
+    async findPermissionIds(ids: string[]): Promise<Types.ObjectId[]> {
+        if (!ids || ids.length === 0) {
+            return [];
+        }
+
+        const permissions = await this.permissionModel.find({
+            _id: { $in: ids.map(id => new Types.ObjectId(id)) },
+        });
+
+        if (permissions.length !== ids.length) {
+            throw new UnprocessableEntityException(
+                'some_permissions_not_found',
+                'Some permissions not found',
+            );
+        }
+
+        return permissions.map(permission => permission._id as Types.ObjectId);
     }
 }

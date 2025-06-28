@@ -9,17 +9,21 @@ import { PermissionsController } from "src/apis/permissions/permissions.controll
 import { RulesController } from "src/apis/rules/rules.controller";
 import { AuthModule } from "src/apis/auth/auth.module";
 import { AuthController } from "src/apis/auth/auth.controller";
+import { AuditsModule } from "src/apis/audits/audits.module";
+import { AuditsController } from "src/apis/audits/audits.controller";
 
 @Module({
     imports: [
         RolesModule,
         RulesModule,
         PermissionsModule,
+        AuditsModule
     ],
     controllers: [
         RolesController,
         PermissionsController,
         RulesController,
+        AuditsController
     ],
 })
 
