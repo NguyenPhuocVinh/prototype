@@ -12,6 +12,7 @@ export class CreateMediaDtoPipe implements PipeTransform {
         value: CreateMediaDto,
         metadata: ArgumentMetadata,
     ): CreateMediaDto {
+        console.log("🚀 ~ CreateMediaDtoPipe ~ value:", value)
         const { media } = value;
         media?.map((item, index) => {
             const { title, alt } = item;

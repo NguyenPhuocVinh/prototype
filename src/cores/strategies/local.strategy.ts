@@ -24,12 +24,11 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
         const result = _.pick(user, [
             '_id',
-            'id',
-            'last_name',
-            'first_name',
+            'lastName',
+            'firstName',
             'email',
+            'phone',
             'roles',
-            'tenants'
         ])
 
         return result;

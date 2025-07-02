@@ -6,10 +6,13 @@ export enum COLLECTION_NAME {
     ENTITIES = 'entities',
     GROUP_ENTITY = 'groupEntities',
     STORE = 'stores',
-    MEDIA = 'medias',
+    FILE = 'files',
     RULE = 'rules',
     AUDIT = 'audits',
     CATEGORY = 'categories',
+    DRIVER = 'drivers',
+    DRIVER_IDENTITY = 'driverIdentities',
+    DRIVER_REVIEW = 'driverReviews',
 }
 
 export enum TENANT_TYPE {

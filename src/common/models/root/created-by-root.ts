@@ -5,6 +5,8 @@ export class CreatedBy {
     _id: Types.ObjectId;
     lastName: string;
     firstName: string;
+    fullName?: string;
+    phone?: string;
     email: string;
     role: RelationRoot[];
     rules?: number[];

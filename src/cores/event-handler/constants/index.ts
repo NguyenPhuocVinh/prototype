@@ -27,3 +27,32 @@ export enum UPLOAD {
     TYPE = 'upload'
 }
 
+
+export enum EMBEDDED_TYPE {
+    ONE_TO_ONE = 'one_to_one',
+    ONE_TO_MANY = 'one_to_many',
+    ONE_TO_MANY_PROPERTY = 'one_to_many_property',
+    ONE_TO_ONE_PROPERTY = 'one_to_one_property',
+}
+
+export enum QUEUE_TITLE {
+    UPDATE_RELATION_EMBEDDED_ONE_TO_ONE = 'update-relation-embedded-one-to-one',
+    UPDATE_RELATION_EMBEDDED_ONE_TO_MANY = 'update-relation-embedded-one-to-many',
+    UPDATE_RELATION_EMBEDDED_ONE_TO_MANY_PROPERTY = 'update-relation-embedded-one-to-many-property',
+    UPDATE_RELATION_EMBEDDED_FILE = 'update-relation-embedded-file',
+    UPDATE_RELATION_EMBEDDED_GROUP_FIELD = 'update-relation-embedded-group-field',
+    UPDATE_RELATION_EMBEDDED_USER = 'update-relation-embedded-user',
+    DELETE_RELATION_EMBEDDED_ONE_TO_ONE = 'delete-relation-embedded-one-to-one',
+    DELETE_RELATION_EMBEDDED_ONE_TO_MANY = 'delete-relation-embedded-one-to-many',
+    DELETE_RELATION_EMBEDDED_ONE_TO_MANY_PROPERTY = 'delete-relation-embedded-one-to-many-property',
+    DELETE_RELATION_EMBEDDED_FILE = 'delete-relation-embedded-file',
+    DELETE_RELATION_EMBEDDED_GROUP_FIELD = 'delete-relation-embedded-group-field',
+    AUTO_ADD_COLLECTIONS_FOR_CONDITION = 'auto-add-collections-for-condition',
+}
+
+
+export enum QUEUE_PROCESSOR_TITLE {
+    UPDATE_RELATION_EMBEDDED = 'update-relation-embedded',
+    DELETE_RELATION_EMBEDDED = 'delete-relation-embedded',
+    AUTO_ADD_COLLECTIONS_FOR_CONDITION = 'auto-add-collections-for-condition',
+}

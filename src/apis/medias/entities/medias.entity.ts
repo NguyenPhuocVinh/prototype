@@ -15,9 +15,9 @@ import { transferValueCreatedBy, transferValueCreatedByToName, transferValuePath
     timestamps: {
         currentTime: () => moment().tz(appSettings.timezone).toDate(),
     },
-    collection: COLLECTION_NAME.MEDIA,
+    collection: COLLECTION_NAME.FILE,
 })
-export class Media extends AggregateRootMixin(Document) {
+export class File extends AggregateRootMixin(Document) {
     @Property({ type: [RelationRoot.name], ref: COLLECTION_NAME.CATEGORY })
     @Prop({ type: [Object] })
     categories: RelationRoot[];
@@ -67,9 +67,9 @@ export class Media extends AggregateRootMixin(Document) {
     shortDescription: string;
 }
 
-export const MediaSchema = SchemaFactory.createForClass(Media);
+export const FileSchema = SchemaFactory.createForClass(File);
 
-MediaSchema.virtual('folder').get(function () {
+FileSchema.virtual('folder').get(function () {
     if (this.categories?.length > 0) {
         return this.categories;
     }
@@ -77,9 +77,9 @@ MediaSchema.virtual('folder').get(function () {
 });
 
 
-MediaSchema.set('toJSON', { virtuals: true });
+FileSchema.set('toJSON', { virtuals: true });
 
-MediaSchema.post('find', function (docs, next) {
+FileSchema.post('find', function (docs, next) {
     docs.forEach((doc) => {
         if (isObjectAndNotEmpty(doc)) {
             doc.path = transferValuePathImage(doc);
@@ -100,7 +100,7 @@ MediaSchema.post('find', function (docs, next) {
     next();
 });
 
-MediaSchema.post('findOne', function (doc, next) {
+FileSchema.post('findOne', function (doc, next) {
     if (isObjectAndNotEmpty(doc)) {
         doc.path = transferValuePathImage(doc);
     }
@@ -120,13 +120,13 @@ MediaSchema.post('findOne', function (doc, next) {
     next();
 });
 
-MediaSchema.pre('save', function (next) {
+FileSchema.pre('save', function (next) {
     this.createdBy = transferValueCreatedBy(this.createdBy);
 
     next();
 });
 
-MediaSchema.pre('updateOne', function (next) {
+FileSchema.pre('updateOne', function (next) {
     const update = this.getUpdate();
     const path = _.get(update, 'path', null);
     const createdBy = _.get(update, 'createdBy', null);

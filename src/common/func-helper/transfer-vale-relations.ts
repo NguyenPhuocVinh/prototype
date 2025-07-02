@@ -5,7 +5,8 @@ import { Types } from "mongoose";
 import _ from "lodash";
 import { RelationRoot, relationRootPick } from "../models/root/relation-root";
 import { appSettings } from "src/configs/app.config";
-import { Media } from "src/apis/medias/entities/medias.entity";
+import { File } from "src/apis/medias/entities/medias.entity";
+import { filePick, FileRoot } from "../models/root/file-root";
 
 export const transferValueCreatedBy = (
     createdBy: CreatedByRoot,
@@ -73,7 +74,43 @@ export const transferValueRelations = (
     return result;
 };
 
-export const transferValuePathImage = (featured_image: Media): string => {
-    const { path, disk } = featured_image;
+export const transferValuePathImage = (file: File): string => {
+    const { path, disk } = file;
     return `${appSettings.cloudinary.url}/${path}`;
+};
+
+export const transferValueFile = (file: FileRoot): FileRoot => {
+    if (!isObjectAndNotEmpty(file)) {
+        return file;
+    }
+
+    const _id = _.get(file, '_id', null);
+
+    if (!Types.ObjectId.isValid(_id)) {
+        throw new UnprocessableEntityException(
+            'The _id is not a valid ObjectId',
+        );
+    }
+
+    const path = _.get(file, 'path', '');
+    const paths = path.split('/');
+
+    const result = {
+        ...file,
+        _id: new Types.ObjectId(file._id),
+        path: `${paths[paths.length - 2]}/${paths[paths.length - 1]}`,
+    };
+
+    if (result['disk'] === 'ckfinder') {
+        try {
+            const urlObject = new URL(path);
+            const pathname = urlObject.pathname;
+            const relativePath = '/' + pathname.substring(1);
+            result['path'] = relativePath;
+        } catch (e) {
+            result['path'] = path;
+        }
+    }
+
+    return _.pick(result, filePick) as FileRoot;
 };

@@ -1,6 +1,5 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { BaseService } from 'src/cores/base-service/base.service';
-import { Media } from './entities/medias.entity';
 import { BaseRepositoryService } from 'src/cores/base-service/repository.service';
 import { COLLECTION_NAME } from 'src/cores/__schema__/configs/enum';
 import { EventEmitter2 } from '@nestjs/event-emitter';
@@ -15,14 +14,15 @@ import { extname } from 'path';
 import { mongooseTransactionHandler } from 'src/common/func-helper/mongoose-transaction';
 import { CreatedBy } from 'src/common/models/root/created-by-root';
 import { CreateMediaDto } from './dto/create-media.dto';
+import { File } from './entities/medias.entity';
 
 @Injectable()
-export class MediasService extends BaseService<Media> {
-    baseRepositoryService: BaseRepositoryService<Media>;
-    collection: string = COLLECTION_NAME.MEDIA;
+export class MediasService extends BaseService<File> {
+    baseRepositoryService: BaseRepositoryService<File>;
+    collection: string = COLLECTION_NAME.FILE;
     constructor(
-        @InjectModel(COLLECTION_NAME.MEDIA)
-        private readonly fileModel: Model<Media>,
+        @InjectModel(COLLECTION_NAME.FILE)
+        private readonly fileModel: Model<File>,
         // @InjectModel(COLLECTION_NAME.CATEGORY)
         // private readonly categoryModel: Model<Category>,
         @InjectConnection()
@@ -30,10 +30,10 @@ export class MediasService extends BaseService<Media> {
         private readonly cloudinaryService: CloudinaryService,
         eventEmitter: EventEmitter2,
     ) {
-        super(connection, fileModel, eventEmitter, COLLECTION_NAME.MEDIA);
+        super(connection, fileModel, eventEmitter, COLLECTION_NAME.FILE);
         this.baseRepositoryService = new BaseRepositoryService(
             fileModel,
-            COLLECTION_NAME.MEDIA,
+            COLLECTION_NAME.FILE,
             eventEmitter,
         );
     }

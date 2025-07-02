@@ -5,6 +5,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { LocalAuthGuard } from 'src/cores/guards/local-auth.guard';
 import { UserLoginDto } from './dto/user-login.dto';
 import { CreatedBy } from 'src/common/models/root/created-by-root';
+import { CreateDriverDto } from '../drivers/dto/create-driver.dto';
+import { LocalDriverAuthGuard } from 'src/cores/guards/local-driver-auth.guard';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -34,5 +36,28 @@ export class AuthController {
         }
         const result: CreatedBy = req.user;
         return await this.authService.login(result);
+    }
+
+    @Post('register-driver')
+    async registerDriver(
+        @Body() payload: CreateDriverDto
+    ) {
+        return await this.authService.regiserDriver(payload);
+    }
+
+    @Post('login-driver')
+    @UseGuards(LocalDriverAuthGuard)
+    @ApiBody({
+        description: 'Driver credentials',
+        type: UserLoginDto,
+    })
+    async loginDriver(
+        @Req() req: any,
+    ) {
+        if (!req.user) {
+            return null;
+        }
+        const result: CreatedBy = req.user;
+        return await this.authService.loginDriver(result);
     }
 }

@@ -5,7 +5,10 @@ import { PermissionsGuard } from '../guards/permissions.guard';
 
 export const Authorize = (...args: string[]) => {
     return applyDecorators(
-        Permissions(...args),
-        UseGuards(JwtAuthGuard, PermissionsGuard),
+        // Permissions(...args),
+        UseGuards(
+            JwtAuthGuard,
+            // PermissionsGuard
+        ),
     );
 };

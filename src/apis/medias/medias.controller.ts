@@ -22,7 +22,7 @@ export class MediasController {
         })
     )
     async uploadFile(
-        @Body(new CreateMediaDtoPipe()) createMediaDto: CreateMediaDto,
+        @Body(new CreateMediaDtoPipe()) createMediaDto: any,
         @UploadedFile() file: IUploadedMulterFile,
         @Req() req: any,
     ): Promise<any> {
