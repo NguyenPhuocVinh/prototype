@@ -51,12 +51,12 @@ export class Driver extends Document {
     @Prop({ type: Boolean, default: false })
     aiChecked: boolean;
 
-    @Property({ type: FileRoot, ref: COLLECTION_NAME.FILE })
-    @Prop({ type: Object })
+    @Property({ type: [FileRoot.name], ref: COLLECTION_NAME.FILE })
+    @Prop({ type: Object, ref: COLLECTION_NAME.FILE })
     avatar: FileRoot;
 
-    @Property({ type: Types.ObjectId, ref: COLLECTION_NAME.DRIVER_IDENTITY })
-    @Prop({ type: Types.ObjectId })
+    @Property({ type: Types.ObjectId.name, ref: COLLECTION_NAME.DRIVER_IDENTITY })
+    @Prop({ type: Types.ObjectId, ref: COLLECTION_NAME.DRIVER_IDENTITY })
     driverIdentity: Types.ObjectId;
 
     @Property({ type: String.name })
@@ -79,8 +79,14 @@ export class Driver extends Document {
     @Prop({ type: Boolean, default: true })
     isActive: boolean;
 
+    @Property({ type: Types.ObjectId.name, ref: COLLECTION_NAME.ROLE })
     @Prop({ type: Types.ObjectId, ref: COLLECTION_NAME.ROLE })
     role: Types.ObjectId;
+
+    @Property({ type: [Types.ObjectId.name], ref: COLLECTION_NAME.DRIVER_REVIEW })
+    @Prop({ type: [Types.ObjectId], ref: COLLECTION_NAME.DRIVER_REVIEW })
+    reviews: Types.ObjectId[];
+
 }
 
 export const DriverSchema = SchemaFactory.createForClass(Driver);

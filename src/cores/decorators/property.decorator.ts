@@ -29,3 +29,7 @@ export const Property = (propertyOption: PropertyOption) => {
         }
     }
 }
+
+export function getProperties(obj: any): Array<Property> {
+    return obj.prototype[properties];
+}

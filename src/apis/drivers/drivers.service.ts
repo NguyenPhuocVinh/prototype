@@ -59,7 +59,7 @@ export class DriversService extends BaseService<Driver> {
             );
         }
 
-        const user = await this.driverModel.findOne({ phone });
+        const user = await this.driverModel.findOne({ phone }).populate('driverIdentity');
 
         const isMatch =
             user &&

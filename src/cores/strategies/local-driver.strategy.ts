@@ -21,7 +21,6 @@ export class LocalDriverStrategy extends PassportStrategy(Strategy, 'local-drive
         if (!user) {
             return undefined;
         }
-        console.log("🚀 ~ LocalDriverStrategy ~ validate ~ user:", user)
 
         const result = _.pick(user, [
             '_id',
@@ -32,7 +31,6 @@ export class LocalDriverStrategy extends PassportStrategy(Strategy, 'local-drive
             'phone',
             'role',
         ])
-        console.log("🚀 ~ LocalDriverStrategy ~ validate ~ result:", result)
 
         return result;
     }

@@ -6,6 +6,7 @@ import { cleanAccents, rawString } from "src/common/func-helper/string";
 import { AggregateRootMixin } from "src/common/models/root/aggregate-root";
 import { RelationRoot } from "src/common/models/root/relation-root";
 import { appSettings } from "src/configs/app.config";
+import { Property } from "src/cores/decorators/property.decorator";
 
 
 @Schema(
@@ -17,24 +18,31 @@ import { appSettings } from "src/configs/app.config";
     }
 )
 export class User extends Document {
+    @Property({ type: String.name })
     @Prop({ type: String, unique: true })
     userName: string;
 
+    @Property({ type: String.name })
     @Prop({ type: String, required: true, unique: true })
     phone: string;
 
+    @Property({ type: String.name })
     @Prop({ type: String, required: true, unique: true })
     email: string;
 
+    @Property({ type: String.name })
     @Prop({ type: String, required: true })
     password: string;
 
+    @Property({ type: String.name })
     @Prop({ type: String, required: true })
     firstName: string;
 
+    @Property({ type: String.name })
     @Prop({ type: String, required: true })
     lastName: string;
 
+    @Property({ type: String.name })
     @Prop({ type: String })
     fullName: string;
 

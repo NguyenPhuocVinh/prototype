@@ -6,12 +6,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { appSettings } from './configs/app.config';
 import { AuthModule } from './apis/auth/auth.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { SchemaModule } from './cores/__schema__/schema.module';
 
 const { mongoose } = appSettings;
 @Module({
   imports: [
     EventEmitterModule.forRoot(),
     RouterModule.forRoot(),
+    SchemaModule,
     MongooseModule.forRootAsync({
       useFactory: async () => ({
         uri: mongoose.uri

@@ -23,19 +23,19 @@ export class DriverIdentity extends Document {
     @Prop({ type: Date })
     idIssueDate: Date;
 
-    @Property({ type: FileRoot, ref: COLLECTION_NAME.FILE })
+    @Property({ type: FileRoot.name, ref: COLLECTION_NAME.FILE })
     @Prop({ type: Object })
     idImgFront: FileRoot;
 
-    @Property({ type: FileRoot, ref: COLLECTION_NAME.FILE })
+    @Property({ type: FileRoot.name, ref: COLLECTION_NAME.FILE })
     @Prop({ type: Object })
     idImgBack: FileRoot;
 
-    @Property({ type: FileRoot, ref: COLLECTION_NAME.FILE })
+    @Property({ type: FileRoot.name, ref: COLLECTION_NAME.FILE })
     @Prop({ type: Object })
     licenseImgFront: FileRoot;
 
-    @Property({ type: FileRoot, ref: COLLECTION_NAME.FILE })
+    @Property({ type: FileRoot.name, ref: COLLECTION_NAME.FILE })
     @Prop({ type: Object })
     licenseImgBack: FileRoot;
 
@@ -51,19 +51,19 @@ export class DriverIdentity extends Document {
     @Prop({ type: String, required: true })
     plateNumber: string;
 
-    @Property({ type: FileRoot, ref: COLLECTION_NAME.FILE })
+    @Property({ type: FileRoot.name, ref: COLLECTION_NAME.FILE })
     @Prop({ type: Object })
     regImgFront: FileRoot;
 
-    @Property({ type: FileRoot, ref: COLLECTION_NAME.FILE })
+    @Property({ type: FileRoot.name, ref: COLLECTION_NAME.FILE })
     @Prop({ type: Object })
     regImgBack: FileRoot;
 
-    @Property({ type: Types.ObjectId, ref: COLLECTION_NAME.USER })
+    @Property({ type: Types.ObjectId.name, ref: COLLECTION_NAME.USER })
     @Prop({ type: Types.ObjectId })
     verifyBy: Types.ObjectId;
 
-    @Property({ type: Types.ObjectId, ref: COLLECTION_NAME.DRIVER })
+    @Property({ type: Types.ObjectId.name, ref: COLLECTION_NAME.DRIVER })
     @Prop({ type: Types.ObjectId })
     driver: Types.ObjectId;
 }

@@ -25,11 +25,12 @@ export class Role extends AggregateRootMixin(Document) {
     @Prop({ type: String })
     description: string;
 
-    @Prop({ type: [Types.ObjectId], ref: COLLECTION_NAME.PERMISSION })
+    @Property({ type: [Types.ObjectId.name], ref: COLLECTION_NAME.PERMISSION })
+    @Prop({ type: [Types.ObjectId] })
     permissions: Types.ObjectId[];
 
-    @Property({ type: Types.ObjectId.name })
-    @Prop({ type: [Types.ObjectId], ref: COLLECTION_NAME.RULE, default: [] })
+    @Property({ type: [Types.ObjectId.name], ref: COLLECTION_NAME.RULE })
+    @Prop({ type: [Types.ObjectId], default: [] })
     rules: Types.ObjectId[];
 }
 

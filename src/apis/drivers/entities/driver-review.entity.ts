@@ -15,12 +15,12 @@ import { Property } from "src/cores/decorators/property.decorator";
     collection: COLLECTION_NAME.DRIVER_REVIEW,
 })
 export class DriverReview extends Document {
-    @Property({ type: Types.ObjectId, ref: COLLECTION_NAME.USER })
-    @Prop({ type: Types.ObjectId })
+    @Property({ type: Types.ObjectId.name, ref: COLLECTION_NAME.USER })
+    @Prop({ type: Types.ObjectId, ref: COLLECTION_NAME.DRIVER })
     user: Types.ObjectId;
 
-    @Property({ type: Types.ObjectId, ref: COLLECTION_NAME.DRIVER })
-    @Prop({ type: Types.ObjectId })
+    @Property({ type: Types.ObjectId.name, ref: COLLECTION_NAME.DRIVER })
+    @Prop({ type: Types.ObjectId, ref: COLLECTION_NAME.DRIVER })
     driver: Types.ObjectId;
 
     @Property({ type: String.name })
