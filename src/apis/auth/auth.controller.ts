@@ -5,7 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { LocalAuthGuard } from 'src/cores/guards/local-auth.guard';
 import { UserLoginDto } from './dto/user-login.dto';
 import { CreatedBy } from 'src/common/models/root/created-by-root';
-import { CreateDriverDto } from '../drivers/dto/create-driver.dto';
+import { CreateDriverDto } from '../ships/drivers/dto/create-driver.dto';
 import { LocalDriverAuthGuard } from 'src/cores/guards/local-driver-auth.guard';
 
 @Controller('auth')

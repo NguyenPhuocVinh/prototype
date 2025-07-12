@@ -162,6 +162,7 @@ DriverSchema.set('toObject', {
     // }
 });
 
+
 DriverSchema.post('find', function (docs, next) {
     docs.forEach((doc) => {
         if (isObjectAndNotEmpty(doc?.avatar)) {

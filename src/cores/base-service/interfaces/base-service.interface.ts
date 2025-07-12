@@ -21,7 +21,7 @@ export interface IBaseService<T> {
         id: string,
         payload: any,
         user?: CreatedBy
-    ): Promise<T | null>;
+    ): Promise<{ data: T | null }>;
     delete(
         id: string,
         ...args: any[]

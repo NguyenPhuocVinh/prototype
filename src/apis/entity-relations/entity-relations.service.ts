@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { BaseService } from 'src/cores/base-service/base.service';
-import { Entities } from './entities/entity-relation.entity';
+import { EntityRelation } from './entities/entity-relation.entity';
 import { BaseRepositoryService } from 'src/cores/base-service/repository.service';
 import { COLLECTION_NAME } from 'src/cores/__schema__/configs/enum';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
@@ -8,14 +8,14 @@ import { Connection, Model } from 'mongoose';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
-export class EntityRelationsService extends BaseService<Entities> {
-    baseRepositoryService: BaseRepositoryService<Entities>;
-    collection: string = COLLECTION_NAME.ENTITIES;
+export class EntityRelationsService extends BaseService<EntityRelation> {
+    baseRepositoryService: BaseRepositoryService<EntityRelation>;
+    collection: string = COLLECTION_NAME.ENTITY_RELATION;
     private readonly logger = new Logger(EntityRelationsService.name);
     constructor(
         @InjectConnection() public readonly connection: Connection,
-        @InjectModel(COLLECTION_NAME.ENTITIES)
-        private readonly entitiesModel: Model<Entities>,
+        @InjectModel(COLLECTION_NAME.ENTITY_RELATION)
+        private readonly entitiesModel: Model<EntityRelation>,
         eventEmitter: EventEmitter2,
 
     ) {
@@ -23,7 +23,7 @@ export class EntityRelationsService extends BaseService<Entities> {
             connection,
             entitiesModel,
             eventEmitter,
-            COLLECTION_NAME.ENTITIES,
+            COLLECTION_NAME.ENTITY_RELATION,
         );
         this.baseRepositoryService = new BaseRepositoryService(
             entitiesModel,

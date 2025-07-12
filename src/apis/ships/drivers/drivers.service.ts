@@ -108,4 +108,28 @@ export class DriversService extends BaseService<Driver> {
             data: driverIdentityData
         };
     }
+
+    async approveDriver(
+        driverId: string,
+    ): Promise<{ data: any }> {
+        const driver = await this.driverModel.findByIdAndUpdate(
+            driverId,
+            {
+                isVerified: true,
+            },
+            {
+                new: true,
+                fields: {
+                    isVerified: 1,
+                },
+            },
+        );
+        if (!driver) {
+            throw new UnprocessableEntityException(
+                'driver_not_found',
+                'Driver not found',
+            );
+        }
+        return { data: driver };
+    }
 }

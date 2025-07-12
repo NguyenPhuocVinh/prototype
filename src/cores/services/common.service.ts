@@ -3,6 +3,8 @@ import { EntitiesService } from "./entities.service";
 import { Connection } from "mongoose";
 import { InjectConnection } from "@nestjs/mongoose";
 import { COLLECTION_NAME } from "../__schema__/configs/enum";
+import _ from "lodash";
+import { removeDiacritics } from "src/common/func-helper/conver-value";
 
 export interface ExistRelationsModel {
     data: any;
@@ -12,9 +14,6 @@ export interface ExistRelationsModel {
 export interface CheckValidOption {
     data: any;
     collectionName: string;
-    locale: string;
-    id?: string;
-    type?: string;
 }
 
 @Injectable()
@@ -64,4 +63,30 @@ export class CommonService extends EntitiesService {
     //         }
     //     }
     // }
+
+    async checkValidCollection(checkValidOption: CheckValidOption) {
+        const { collectionName, data } = checkValidOption;
+        console.log("🚀 ~ CommonService ~ checkValidCollection ~ data:", data)
+
+        const slug = _.kebabCase(removeDiacritics(data));
+
+        if (!slug) {
+            return;
+        }
+
+        const model = this.getModel(collectionName);
+        const document = await model.findOne({
+            slug
+        });
+
+        if (document) {
+            throw new UnprocessableEntityException(
+                'slug: ' +
+                slug +
+                ' is already exists in ' +
+                collectionName,
+            );
+        }
+        return;
+    }
 }

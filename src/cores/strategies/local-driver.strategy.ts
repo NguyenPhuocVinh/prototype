@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import _ from 'lodash';
 import { Strategy } from 'passport-local';
-import { DriversService } from 'src/apis/drivers/drivers.service';
+import { DriversService } from 'src/apis/ships/drivers/drivers.service';
 
 @Injectable()
 export class LocalDriverStrategy extends PassportStrategy(Strategy, 'local-driver') {

@@ -1,3 +1,8 @@
+import { isDateString, isMongoId } from "class-validator";
+import { size } from "lodash";
+import moment from "moment-timezone";
+import { Types } from "mongoose";
+
 export const diacriticSensitiveRegex = (str: string = '') => {
     return str
         .replace(/[!@#$^&%*+=\-/{}:<>?,.\]\[\(\)|';]/g, ' ')
@@ -36,4 +41,27 @@ export const diacriticSensitiveRegex = (str: string = '') => {
 
 export const removeDiacritics = (str: string) => {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+};
+
+
+export const getTimeForLocation = (date: Date, location: string): Date => {
+    if (!isDateString(date)) return date;
+    return moment(date).tz(location).toDate();
+};
+
+
+export const convertToObjectId = (value: string | number | Types.ObjectId) => {
+    if (!value) return null;
+    if (isMongoId(value)) {
+        return new Types.ObjectId(value);
+    } else {
+        return Number(value);
+    }
+};
+
+export const convertToObjectIds = (
+    values: (string | number | Types.ObjectId)[],
+) => {
+    if (size(values) === 0) return [];
+    return values.map((value) => convertToObjectId(value));
 };

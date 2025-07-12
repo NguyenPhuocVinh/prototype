@@ -8,9 +8,10 @@ export class CreatedBy {
     fullName?: string;
     phone?: string;
     email: string;
-    role: RelationRoot[];
+    role: Types.ObjectId;
     rules?: number[];
     rulePermissions?: { [key: string]: string };
+    tenant?: Types.ObjectId;
 }
 
 

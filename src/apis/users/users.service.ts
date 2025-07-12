@@ -43,19 +43,6 @@ export class UsersService extends BaseService<User> {
         }
     }
 
-    async isExist(
-        payload: string
-    ) {
-        const user = await this.userModel.findOne({
-            $or: [
-                { email: payload },
-                { phone: payload }
-            ]
-        }).lean();
-
-        return !!user;
-    }
-
     async validateUser(
         email: string,
         password: string

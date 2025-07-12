@@ -11,19 +11,33 @@ import { AuthModule } from "src/apis/auth/auth.module";
 import { AuthController } from "src/apis/auth/auth.controller";
 import { AuditsModule } from "src/apis/audits/audits.module";
 import { AuditsController } from "src/apis/audits/audits.controller";
+import { TenantsModule } from "src/apis/tenants/tenants.module";
+import { TenantsController } from "src/apis/tenants/tenants.controller";
+import { EntityRelationsModule } from "src/apis/entity-relations/entity-relations.module";
+import { GroupEntitiesController } from "src/apis/group-entities/group-entities.controller";
+import { GroupEntitiesModule } from "src/apis/group-entities/group-entities.module";
+import { ModelsModule } from "src/apis/models/models.module";
+import { ModelsController } from "src/apis/models/models.controller";
 
 @Module({
     imports: [
         RolesModule,
         RulesModule,
         PermissionsModule,
-        AuditsModule
+        AuditsModule,
+        TenantsModule,
+        EntityRelationsModule,
+        GroupEntitiesModule,
+        ModelsModule,
     ],
     controllers: [
         RolesController,
         PermissionsController,
         RulesController,
-        AuditsController
+        AuditsController,
+        TenantsController,
+        GroupEntitiesController,
+        ModelsController
     ],
 })
 

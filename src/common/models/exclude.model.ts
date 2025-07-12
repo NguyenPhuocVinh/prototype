@@ -22,4 +22,19 @@ export class ExcludeModel {
 
     @Exclude()
     deletedAt: Date | null;
+
+    @Exclude()
+    isActive: boolean;
+
+    @Exclude()
+    isDeleted: boolean;
+
+    @Exclude()
+    entities: string[];
+
+    @Exclude()
+    slug: string;
+
+    @Exclude()
+    __v: number;
 }

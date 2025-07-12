@@ -28,7 +28,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
             'firstName',
             'email',
             'phone',
-            'roles',
+            'role',
         ])
 
         return result;

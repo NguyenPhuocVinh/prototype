@@ -35,7 +35,7 @@ export class RouterModule {
                     ],
                 },
                 {
-                    path: '*',
+                    path: '*path',
                     module: NotFoundModule,
                 },
             ]),

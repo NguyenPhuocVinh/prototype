@@ -10,6 +10,8 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { RelationRoot } from 'src/common/models/root/relation-root';
+import { Types } from 'mongoose';
+import { ToObjectIdArray } from 'src/cores/pipes/transfer-object-ids.dto.pipe';
 
 export class CreateUserDto {
     @ApiProperty({ example: 'username' })
@@ -47,5 +49,24 @@ export class CreateUserDto {
     @Type(() => Date)
     @IsDate()
     birthDay?: Date;
+
+    @ApiProperty({
+        example: '685e2b3647166fb4e6ac99e0',
+        required: false,
+        description: 'Role ID (Mongo ObjectId)',
+    })
+    @IsOptional()
+    @IsMongoId()
+    role?: string;
+
+    @ApiProperty({
+        example: ['68707fa92852ef3064f7c8c0'],
+        required: false,
+        description: 'Tenant ID list',
+    })
+    @IsOptional()
+    @IsArray()
+    @ToObjectIdArray()
+    tenants?: Types.ObjectId[];
 
 }

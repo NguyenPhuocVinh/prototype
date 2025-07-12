@@ -5,7 +5,7 @@ import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { appSettings } from 'src/configs/app.config';
 import { LocalStrategy } from 'src/cores/strategies/local.strategy';
-import { DriversModule } from '../drivers/drivers.module';
+import { DriversModule } from '../ships/drivers/drivers.module';
 import { LocalDriverStrategy } from 'src/cores/strategies/local-driver.strategy';
 import { JwtStrategy } from 'src/cores/strategies/jwt.strategy';
 import { RolesModule } from '../roles/roles.module';

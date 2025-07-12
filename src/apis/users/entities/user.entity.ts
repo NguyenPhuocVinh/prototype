@@ -46,17 +46,17 @@ export class User extends Document {
     @Prop({ type: String })
     fullName: string;
 
+    @Property({ type: Date.name })
     @Prop({ type: Date })
     birthDate: Date;
 
-    @Prop({ type: String })
-    idCode: string;
-
-    @Prop({ type: String })
-    dateOfIssue: Date;
-
+    @Property({ type: Types.ObjectId.name, ref: COLLECTION_NAME.ROLE })
     @Prop({ type: Types.ObjectId, ref: COLLECTION_NAME.ROLE })
     role: Types.ObjectId;
+
+    @Property({ type: [Types.ObjectId.name], ref: COLLECTION_NAME.TENANT })
+    @Prop({ type: [Types.ObjectId], ref: COLLECTION_NAME.TENANT })
+    tenants: Types.ObjectId[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

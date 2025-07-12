@@ -4,14 +4,17 @@ import { EntityRelationsService } from "src/apis/entity-relations/entity-relatio
 import { COLLECTION_NAME } from "./configs/enum";
 import { Role } from "src/apis/roles/entities/role.entity";
 import { User } from "src/apis/users/entities/user.entity";
-import { Driver } from "src/apis/drivers/entities/driver.entity";
-import { DriverIdentity, DriverIdentitySchema } from "src/apis/drivers/entities/driver-identity.entity";
-import { DriverReview } from "src/apis/drivers/entities/driver-review.entity";
+import { Driver } from "src/apis/ships/drivers/entities/driver.entity";
+import { DriverIdentity, DriverIdentitySchema } from "src/apis/ships/drivers/entities/driver-identity.entity";
+import { DriverReview } from "src/apis/ships/drivers/entities/driver-review.entity";
 import { getProperties } from "../decorators/property.decorator";
 import { getEmbeddedType } from "./configs";
-import { Entities } from "src/apis/entity-relations/entities/entity-relation.entity";
+import { EntityRelation } from "src/apis/entity-relations/entities/entity-relation.entity";
 import { Permissions } from "src/apis/permissions/entities/permission.entity";
 import { File } from "src/apis/medias/entities/medias.entity";
+import { Entity } from "src/apis/models/entities/model.entity";
+import { GroupEntity } from "src/apis/group-entities/entities/group-entity.entity";
+import { Tenant } from "src/apis/tenants/entities/tenant.entity";
 
 
 @Injectable()
@@ -37,24 +40,24 @@ export class SchemaService implements OnModuleInit {
                 collectionName: COLLECTION_NAME.PERMISSION,
             },
             {
-                entity: Entities,
-                collectionName: COLLECTION_NAME.ENTITIES,
+                entity: EntityRelation,
+                collectionName: COLLECTION_NAME.ENTITY_RELATION,
             },
             {
                 entity: User,
                 collectionName: COLLECTION_NAME.USER,
             },
             {
-                entity: Driver,
-                collectionName: COLLECTION_NAME.DRIVER,
+                entity: Entity,
+                collectionName: COLLECTION_NAME.ENTITY,
             },
             {
-                entity: DriverIdentity,
-                collectionName: COLLECTION_NAME.DRIVER_IDENTITY,
+                entity: GroupEntity,
+                collectionName: COLLECTION_NAME.GROUP_ENTITY,
             },
             {
-                entity: DriverReview,
-                collectionName: COLLECTION_NAME.DRIVER_REVIEW,
+                entity: Tenant,
+                collectionName: COLLECTION_NAME.TENANT,
             }
         ];
 

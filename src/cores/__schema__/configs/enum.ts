@@ -3,16 +3,17 @@ export enum COLLECTION_NAME {
     ROLE = 'roles',
     PERMISSION = 'permissions',
     TENANT = 'tenants',
-    ENTITIES = 'entities',
-    GROUP_ENTITY = 'groupEntities',
+    ENTITY_RELATION = 'entity-relations',
+    GROUP_ENTITY = 'group-entities',
     STORE = 'stores',
     FILE = 'files',
     RULE = 'rules',
     AUDIT = 'audits',
     CATEGORY = 'categories',
     DRIVER = 'drivers',
-    DRIVER_IDENTITY = 'driverIdentities',
-    DRIVER_REVIEW = 'driverReviews',
+    DRIVER_IDENTITY = 'driver-identities',
+    DRIVER_REVIEW = 'driver-reviews',
+    ENTITY = 'entities',
 }
 
 export enum TENANT_TYPE {

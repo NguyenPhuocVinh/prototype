@@ -1,5 +1,5 @@
 import { Injectable, UnprocessableEntityException } from "@nestjs/common";
-import { Connection, Document, Model } from "mongoose";
+import { Connection, Document, Model, Types } from "mongoose";
 import { IBaseService } from "./interfaces/base-service.interface";
 import { Meta } from "src/common/dto/index.dto";
 import { PagingDto } from "src/common/dto/page-result.dto";
@@ -30,11 +30,15 @@ export class BaseService<T extends Document> implements IBaseService<T> {
 
     async create(
         payload: any,
-        user?: CreatedBy
+        user?: CreatedBy,
+        id?: string
     ): Promise<{ data: T } | any> {
+        const session = await this.connection.startSession();
+        const { createdBy, ...rest } = payload;
         const result = new this.model(
             {
-                ...payload,
+                ...rest,
+                _id: id,
                 createdBy: user,
             }
         )
@@ -44,8 +48,17 @@ export class BaseService<T extends Document> implements IBaseService<T> {
             result['slug'] = _.kebabCase(removeDiacritics(name));
         }
 
-        await result.save();
-
+        const transactionHandlerMethod = async () => {
+            await this.baseRepositoryService.save(result, { session });
+        };
+        await mongooseTransactionHandler<void>(
+            transactionHandlerMethod,
+            (error) => {
+                throw new UnprocessableEntityException(error);
+            },
+            this.connection,
+            session,
+        );
         return {
             data: result
         }
@@ -105,11 +118,14 @@ export class BaseService<T extends Document> implements IBaseService<T> {
         const { sortBy, other } = sort;
 
         if (user) {
-            queryParams.filterQuery['$or'].push(
-                {
-                    isActive: true,
-                }
-            )
+            const { tenant } = user;
+            if (!queryParams.filterQuery['$or'])
+                queryParams.filterQuery['$or'] = [];
+
+            queryParams.filterQuery['$or'].push({
+                isActive: true,
+                tenant
+            });
         }
 
         const filterQuery = {
@@ -119,7 +135,7 @@ export class BaseService<T extends Document> implements IBaseService<T> {
         const skip = (page - 1) * limit;
         const result = this.model
             .find(filterQuery)
-            .select('-password -long_description -blocks')
+            .select('-password')
             .limit(limit)
             .skip(skip)
             .sort({ [sortBy]: other })
@@ -138,9 +154,31 @@ export class BaseService<T extends Document> implements IBaseService<T> {
         id: string,
         payload: any,
         user?: CreatedBy
-    ): Promise<T> {
-        throw new Error("Method not implemented.");
+    ): Promise<{ data: T | null }> {
+        console.log("🚀 ~ BaseService<T ~ id:", id)
+        const { createdBy, ...rest } = payload;
+        const filterQuery = {
+            _id: id,
+        }
 
+        const collection = await this.model.findOne(filterQuery);
+        console.log("🚀 ~ BaseService<T ~ collection:", collection)
+        if (!collection) {
+            return await this.create(rest, user)
+        }
+        if (collection) {
+            const slug = _.get(rest, 'slug', null);
+            const name = _.get(rest, 'name', null);
+            if (name && slug != _.kebabCase(removeDiacritics(name))) {
+                rest['slug'] = _.kebabCase(removeDiacritics(name));
+            }
+        }
+
+        await this.baseRepositoryService.updateOne(filterQuery, rest);
+
+        return {
+            data: await this.model.findById(collection?._id),
+        };
     }
 
     async delete(id: string, ...args: any[]): Promise<any> {

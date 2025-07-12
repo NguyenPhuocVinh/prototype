@@ -19,6 +19,10 @@ export const AggregateRootMixin = <T extends new (...args: any[]) => any>(
         @Prop({ default: true })
         isActive: boolean;
 
+        @Property({ type: Types.ObjectId.name, ref: COLLECTION_NAME.TENANT })
+        @Prop({ type: Types.ObjectId, ref: COLLECTION_NAME.TENANT })
+        tenant: Types.ObjectId;
+
         @Property({ type: Boolean.name })
         @Prop({ type: Boolean, default: false })
         isDeleted: boolean;
@@ -35,8 +39,9 @@ export const AggregateRootMixin = <T extends new (...args: any[]) => any>(
         @Prop({ type: Object, default: {} })
         deletedBy: CreatedByRoot;
 
+
         @Property({ type: Date })
-        @Prop({ type: Date, default: null })
+        @Prop({ type: Date })
         deletedAt: Date | null;
     }
     return AggregateRoot as typeof AggregateRoot & T;

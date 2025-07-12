@@ -20,9 +20,9 @@ export class Relation {
     timestamps: {
         currentTime: () => moment().tz(appSettings.timezone).toDate(),
     },
-    collection: COLLECTION_NAME.ENTITIES,
+    collection: COLLECTION_NAME.ENTITY_RELATION,
 })
-export class Entities extends AggregateRootMixin(Document) {
+export class EntityRelation extends AggregateRootMixin(Document) {
     @Property({ type: String.name })
     @Prop({
         unique: true,
@@ -38,15 +38,15 @@ export class Entities extends AggregateRootMixin(Document) {
     relations: Relation[];
 
 }
-export const EntitiesSchema = SchemaFactory.createForClass(Entities);
+export const EntityRelationSchema = SchemaFactory.createForClass(EntityRelation);
 
 
-EntitiesSchema.pre('save', function (next) {
+EntityRelationSchema.pre('save', function (next) {
     this.createdBy = transferValueCreatedBy(this.createdBy);
     next();
 });
 
-EntitiesSchema.pre('updateOne', function (next) {
+EntityRelationSchema.pre('updateOne', function (next) {
     const update = this.getUpdate();
     const createdBy = _.get(update, 'createdBy', null);
 
