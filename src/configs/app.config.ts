@@ -25,4 +25,10 @@ export const appSettings = {
         folder: process.env.CLOUDINARY_FOLDER,
         url: process.env.CLOUDINARY_PUBLIC,
     },
+    redis: {
+        host: process.env.REDIS_HOST,
+        port: parseInt(process.env.REDIS_PORT, 10),
+        password: process.env.REDIS_PASSWORD,
+        username: process.env.REDIS_USERNAME,
+    }
 }

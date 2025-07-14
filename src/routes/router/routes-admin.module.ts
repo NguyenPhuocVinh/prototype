@@ -18,6 +18,7 @@ import { GroupEntitiesController } from "src/apis/group-entities/group-entities.
 import { GroupEntitiesModule } from "src/apis/group-entities/group-entities.module";
 import { ModelsModule } from "src/apis/models/models.module";
 import { ModelsController } from "src/apis/models/models.controller";
+import { EntityRelationsController } from "src/apis/entity-relations/entity-relations.controller";
 
 @Module({
     imports: [
@@ -37,7 +38,8 @@ import { ModelsController } from "src/apis/models/models.controller";
         AuditsController,
         TenantsController,
         GroupEntitiesController,
-        ModelsController
+        ModelsController,
+        EntityRelationsController
     ],
 })
 

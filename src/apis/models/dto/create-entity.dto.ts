@@ -22,8 +22,4 @@ export class CreateEntityDto {
     @IsNotEmpty()
     @ToObjectId()
     groupEntity: Types.ObjectId | string;
-
-    @IsNotEmpty()
-    @ToObjectId()
-    tenant: Types.ObjectId | string;
 }

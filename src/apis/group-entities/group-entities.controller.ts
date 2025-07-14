@@ -28,9 +28,9 @@ export class GroupEntitiesController {
 
     @Put(':id')
     @Authorize()
-    @CheckValidDataDecorator({
-        collectionName: COLLECTION_NAME.GROUP_ENTITY,
-    })
+    // @CheckValidDataDecorator({
+    //     collectionName: COLLECTION_NAME.GROUP_ENTITY,
+    // })
     async updateGroupEntity(
         @Param('id') id: string,
         @Body() updateGroupEntityDto: CreateGroupEntityDto,

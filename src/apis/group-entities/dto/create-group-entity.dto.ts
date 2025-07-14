@@ -12,12 +12,4 @@ export class CreateGroupEntityDto extends PartialType(ExcludeModel) {
     @IsOptional()
     description?: string;
 
-    @ApiProperty({
-        example: ['68707fa92852ef3064f7c8c0'],
-        required: false,
-        description: 'Tenant ID list',
-    })
-    @IsOptional()
-    @ToObjectId()
-    tenant: string;
 }

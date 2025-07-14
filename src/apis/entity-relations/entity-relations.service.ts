@@ -15,18 +15,18 @@ export class EntityRelationsService extends BaseService<EntityRelation> {
     constructor(
         @InjectConnection() public readonly connection: Connection,
         @InjectModel(COLLECTION_NAME.ENTITY_RELATION)
-        private readonly entitiesModel: Model<EntityRelation>,
+        private readonly entityRelationModel: Model<EntityRelation>,
         eventEmitter: EventEmitter2,
 
     ) {
         super(
             connection,
-            entitiesModel,
+            entityRelationModel,
             eventEmitter,
             COLLECTION_NAME.ENTITY_RELATION,
         );
         this.baseRepositoryService = new BaseRepositoryService(
-            entitiesModel,
+            entityRelationModel,
             this.collection,
             eventEmitter,
         );
@@ -36,7 +36,7 @@ export class EntityRelationsService extends BaseService<EntityRelation> {
         collectionName: string,
         relations: Array<Object>,
     ) {
-        const entity = await this.entitiesModel.findOne({
+        const entity = await this.entityRelationModel.findOne({
             key: collectionName,
         });
 
@@ -54,7 +54,7 @@ export class EntityRelationsService extends BaseService<EntityRelation> {
         }
 
         if (!entity) {
-            await this.entitiesModel.create({
+            await this.entityRelationModel.create({
                 key: collectionName,
                 name: collectionName,
                 slug: collectionName,
@@ -63,5 +63,17 @@ export class EntityRelationsService extends BaseService<EntityRelation> {
 
             this.logger.debug(`Create relations for ${collectionName} done`);
         }
+    }
+
+
+    async findAllEntity() {
+        return await this.entityRelationModel
+            .find({
+                relations: {
+                    $exists: true,
+                    $ne: [],
+                },
+            })
+            .exec();
     }
 }

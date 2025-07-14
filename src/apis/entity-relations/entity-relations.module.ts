@@ -4,6 +4,10 @@ import { EntityRelationsService } from './entity-relations.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { COLLECTION_NAME } from 'src/cores/__schema__/configs/enum';
 import { EntityRelationSchema } from './entities/entity-relation.entity';
+import { UpdateRelationsEvent } from 'src/cores/event-handler/relations/update/update-relations.event';
+import { UpdateRelationsProcessor } from 'src/cores/event-handler/relations/update/update-relations.processor';
+import { BullModule } from '@nestjs/bullmq';
+import { QUEUE_PROCESSOR_TITLE } from 'src/cores/event-handler/constants';
 
 @Module({
   imports: [
@@ -12,10 +16,20 @@ import { EntityRelationSchema } from './entities/entity-relation.entity';
         name: COLLECTION_NAME.ENTITY_RELATION,
         schema: EntityRelationSchema
       }
-    ])
+    ]),
+    BullModule.registerQueue({
+      name: QUEUE_PROCESSOR_TITLE.UPDATE_RELATION_EMBEDDED,
+    }),
+    BullModule.registerQueue({
+      name: QUEUE_PROCESSOR_TITLE.DELETE_RELATION_EMBEDDED,
+    }),
   ],
   controllers: [EntityRelationsController],
-  providers: [EntityRelationsService],
+  providers: [
+    EntityRelationsService,
+    UpdateRelationsEvent,
+    UpdateRelationsProcessor
+  ],
   exports: [EntityRelationsService]
 })
 export class EntityRelationsModule { }

@@ -2,7 +2,7 @@ import { EventEmitter2 } from "@nestjs/event-emitter";
 import { InjectModel } from "@nestjs/mongoose";
 import _ from "lodash";
 import { ClientSession, Document, FilterQuery, Model, MongooseBaseQueryOptions, QueryOptions, SaveOptions, Types, UpdateQuery, UpdateWithAggregationPipeline } from "mongoose";
-import { DELETE_RELATION_EVENT_TITLE, MULTIPLE_LANGUAGES_EVENT_TITLE, UPDATE_RELATION_EVENT_TITLE } from "src/cores/event-handler/constants";
+import { DELETE_RELATION_EVENT_TITLE, UPDATE_RELATION_EVENT_TITLE } from "src/cores/event-handler/constants";
 import { COLLECTION_NAME } from "src/cores/__schema__/configs/enum";
 
 export class BaseRepositoryService<T extends Document> {

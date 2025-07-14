@@ -4,14 +4,12 @@ import { AppService } from './app.service';
 import { RouterModule } from './routes/route.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { appSettings } from './configs/app.config';
-import { AuthModule } from './apis/auth/auth.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { SchemaModule } from './cores/__schema__/schema.module';
-import { TenantMiddleware } from './cores/middlewares/tenant.middleware';
-import { RoutesAdminModule } from './routes/router/routes-admin.module';
 import { CommonModule } from './cores/services/common.module';
+import { BullModule } from '@nestjs/bullmq';
 
-const { mongoose } = appSettings;
+const { mongoose, redis, appName } = appSettings;
 @Module({
   imports: [
     EventEmitterModule.forRoot(),
@@ -22,7 +20,20 @@ const { mongoose } = appSettings;
       useFactory: async () => ({
         uri: mongoose.uri
       })
-    })
+    }),
+    BullModule.forRootAsync({
+      useFactory: () => ({
+        connection: {
+          host: redis.host,
+          port: redis.port,
+          password: redis.password,
+        },
+        prefix: appName,
+        defaultJobOptions: {
+          removeOnComplete: true,
+        }
+      })
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

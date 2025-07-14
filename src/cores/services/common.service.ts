@@ -66,7 +66,6 @@ export class CommonService extends EntitiesService {
 
     async checkValidCollection(checkValidOption: CheckValidOption) {
         const { collectionName, data } = checkValidOption;
-        console.log("🚀 ~ CommonService ~ checkValidCollection ~ data:", data)
 
         const slug = _.kebabCase(removeDiacritics(data));
 

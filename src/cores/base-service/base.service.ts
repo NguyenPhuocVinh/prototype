@@ -39,6 +39,7 @@ export class BaseService<T extends Document> implements IBaseService<T> {
             {
                 ...rest,
                 _id: id,
+                tenant: new Types.ObjectId(user?.tenant),
                 createdBy: user,
             }
         )
@@ -155,14 +156,12 @@ export class BaseService<T extends Document> implements IBaseService<T> {
         payload: any,
         user?: CreatedBy
     ): Promise<{ data: T | null }> {
-        console.log("🚀 ~ BaseService<T ~ id:", id)
         const { createdBy, ...rest } = payload;
         const filterQuery = {
             _id: id,
         }
 
         const collection = await this.model.findOne(filterQuery);
-        console.log("🚀 ~ BaseService<T ~ collection:", collection)
         if (!collection) {
             return await this.create(rest, user)
         }
@@ -173,6 +172,8 @@ export class BaseService<T extends Document> implements IBaseService<T> {
                 rest['slug'] = _.kebabCase(removeDiacritics(name));
             }
         }
+
+        rest['updatedBy'] = user;
 
         await this.baseRepositoryService.updateOne(filterQuery, rest);
 
