@@ -14,6 +14,7 @@ import { mongooseTransactionHandler } from 'src/common/func-helper/mongoose-tran
 import { jsonSchemaToMongooseSchema } from 'src/common/func-helper/json-schema-to-mongoose-schema';
 import { getEmbeddedType, relationsJsonSchema } from 'src/cores/__schema__/configs';
 import { EntityRelationsService } from '../entity-relations/entity-relations.service';
+import { PagingDto } from 'src/common/dto/page-result.dto';
 
 @Injectable()
 export class ModelsService extends BaseService<Entity> {
@@ -75,7 +76,11 @@ export class ModelsService extends BaseService<Entity> {
         try {
             DynamicModel = this.connection.model(collectionName);
         } catch {
-            DynamicModel = this.connection.model(collectionName, mongooseSchema, collectionName);
+            DynamicModel = this.connection.model(
+                collectionName,
+                mongooseSchema,
+                collectionName
+            );
         }
 
         const result = new this.modelModel({
@@ -119,63 +124,105 @@ export class ModelsService extends BaseService<Entity> {
     }
 
     async getModel(slug: string): Promise<Model<any>> {
-        try {
-            return this.connection.model(slug);
-        } catch (err) {
-            const entity = await this.modelModel.findOne({ slug });
-            if (!entity) throw new NotFoundException('Entity not found');
-
-            const schemaDef = jsonSchemaToMongooseSchema(entity.jsonSchema).obj;
-
-            const schema = new Schema(
-                {
-                    ...schemaDef,
-                    _entity: { type: Types.ObjectId, ref: COLLECTION_NAME.ENTITY },
-                },
-                { timestamps: true, collection: slug }
-            );
-
-            return this.connection.model(slug, schema, slug);
+        if (this.connection.models[slug]) {
+            return this.connection.models[slug];
         }
+
+        const entity = await this.modelModel.findOne({ slug });
+        if (!entity?.jsonSchema) {
+            this.logger.warn(
+                `Entity ${slug} not found or missing jsonSchema
+                `);
+            throw new NotFoundException(
+                `Entity ${slug} not found or missing jsonSchema`
+            );
+        }
+
+        const schemaDef = jsonSchemaToMongooseSchema(entity.jsonSchema).obj;
+
+        const schema = new Schema(
+            {
+                ...schemaDef,
+                _entity: {
+                    type: Types.ObjectId,
+                    ref: COLLECTION_NAME.ENTITY
+                },
+            },
+            {
+                timestamps: true,
+                collection: slug
+            }
+        );
+
+        return this.connection.model(slug, schema, slug);
     }
 
 
-    async checkValidData(payload: any, model: Model<any>) {
-        const slug = _.get(model, 'collection.name');
-        if (!slug) throw new NotFoundException('Model collection name not found');
+    async getDynamicModels(): Promise<Model<Entity>[]> {
+        const entities = await this.modelModel.find({}, { slug: 1 });
 
-        const entity = await this.modelModel.findOne({ slug }, { jsonSchema: 1 });
-        if (!entity?.jsonSchema) {
-            throw new NotFoundException(`Entity with slug ${slug} not found`);
-        }
+        const dynamicModels: Model<Entity>[] = [];
 
-        const doc = new model(payload);
-        const validationError = doc.validateSync({ strict: true });
-        if (validationError) {
-            throw new UnprocessableEntityException(validationError);
-        }
-
-        const uniqueFields = _(entity.jsonSchema.properties)
-            .pickBy((prop: any) => prop?.unique)
-            .keys()
-            .value();
-
-        const conflicts: string[] = [];
-
-        for (const field of uniqueFields) {
-            const value = _.get(payload, field);
-            if (_.isNil(value)) continue;
-
-            const exists = await model.exists({ [field]: value });
-            if (exists) {
-                conflicts.push(field);
+        for (const entity of entities) {
+            const slug = entity.slug;
+            try {
+                const model = await this.getModel(slug);
+                dynamicModels.push(model);
+            } catch (err) {
+                this.logger.warn(
+                    `Skipping model ${slug}: ${err.message}`
+                );
             }
         }
 
-        if (conflicts.length > 0) {
-            throw new ConflictException(`Data conflict at field(s): ${conflicts.join(', ')}`);
-        }
-
-        return true;
+        return dynamicModels;
     }
+
+    async findById(id: string): Promise<{ data: any | null; }> {
+        const entity = await this.modelModel.findById(id).populate('groupEntity');
+        if (!entity) {
+            throw new NotFoundException(`Entity with ID ${id} not found`);
+        }
+        return { data: entity };
+    }
+
+    // TODO
+    // async checkValidData(payload: any, model: Model<any>) {
+    //     const slug = _.get(model, 'collection.name');
+    //     if (!slug) throw new NotFoundException('Model collection name not found');
+
+    //     const entity = await this.modelModel.findOne({ slug }, { jsonSchema: 1 });
+    //     if (!entity?.jsonSchema) {
+    //         throw new NotFoundException(`Entity with slug ${slug} not found`);
+    //     }
+
+    //     const doc = new model(payload);
+    //     const validationError = doc.validateSync({ strict: true });
+    //     if (validationError) {
+    //         throw new UnprocessableEntityException(validationError);
+    //     }
+
+    //     const uniqueFields = _(entity.jsonSchema.properties)
+    //         .pickBy((prop: any) => prop?.unique)
+    //         .keys()
+    //         .value();
+
+    //     const conflicts: string[] = [];
+
+    //     for (const field of uniqueFields) {
+    //         const value = _.get(payload, field);
+    //         if (_.isNil(value)) continue;
+
+    //         const exists = await model.exists({ [field]: value });
+    //         if (exists) {
+    //             conflicts.push(field);
+    //         }
+    //     }
+
+    //     if (conflicts.length > 0) {
+    //         throw new ConflictException(`Data conflict at field(s): ${conflicts.join(', ')}`);
+    //     }
+
+    //     return true;
+    // }
 }

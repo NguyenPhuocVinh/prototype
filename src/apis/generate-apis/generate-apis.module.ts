@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { COLLECTION_NAME } from 'src/cores/__schema__/configs/enum';
 import { GenerateApisSchema } from './entities/generate-apis.entity';
 import { ModelsModule } from '../models/models.module';
+import { ValidatesModule } from '../validates/validates.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { ModelsModule } from '../models/models.module';
         schema: GenerateApisSchema
       }
     ]),
-    ModelsModule
+    ModelsModule,
+    ValidatesModule
   ],
   controllers: [GenerateApisController],
   providers: [GenerateApisService]

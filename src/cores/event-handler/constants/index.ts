@@ -56,19 +56,3 @@ export enum QUEUE_PROCESSOR_TITLE {
     DELETE_RELATION_EMBEDDED = 'delete-relation-embedded',
     AUTO_ADD_COLLECTIONS_FOR_CONDITION = 'auto-add-collections-for-condition',
 }
-
-export enum HTTP_METHOD {
-    GET = 'get',
-    POST = 'post',
-    PUT = 'put',
-    PATCH = 'patch',
-    DELETE = 'delete',
-}
-
-export enum API_TYPE {
-    GET = 'get',
-    GET_LIST = 'get-list',
-    CREATE = 'create',
-    UPDATE = 'update',
-    DELETE = 'delete',
-}

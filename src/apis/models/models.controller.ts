@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post, Req } from '@nestjs/common';
 import { ModelsService } from './models.service';
 import { COLLECTION_NAME } from 'src/cores/__schema__/configs/enum';
 import { Authorize } from 'src/cores/decorators/authorize.decorator';
@@ -21,4 +21,15 @@ export class ModelsController {
     ) {
         return this.modelsService.create(createEntityDto);
     }
+
+    @Delete(':id')
+    @Authorize()
+    async delete(
+        @Param('id') id: string,
+        @Req() req: any,
+    ) {
+        const user = req.user;
+        return await this.modelsService.delete(id, user);
+    }
+
 }

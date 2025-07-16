@@ -4,9 +4,6 @@ import { EntityRelationsService } from "src/apis/entity-relations/entity-relatio
 import { COLLECTION_NAME } from "./configs/enum";
 import { Role } from "src/apis/roles/entities/role.entity";
 import { User } from "src/apis/users/entities/user.entity";
-import { Driver } from "src/apis/ships/drivers/entities/driver.entity";
-import { DriverIdentity, DriverIdentitySchema } from "src/apis/ships/drivers/entities/driver-identity.entity";
-import { DriverReview } from "src/apis/ships/drivers/entities/driver-review.entity";
 import { getProperties } from "../decorators/property.decorator";
 import { getEmbeddedType } from "./configs";
 import { EntityRelation } from "src/apis/entity-relations/entities/entity-relation.entity";
@@ -16,11 +13,16 @@ import { Entity } from "src/apis/models/entities/model.entity";
 import { GroupEntity } from "src/apis/group-entities/entities/group-entity.entity";
 import { Tenant } from "src/apis/tenants/entities/tenant.entity";
 import { GenerateApis } from "src/apis/generate-apis/entities/generate-apis.entity";
+import { ModelsService } from "src/apis/models/models.service";
+import { Validates } from "src/apis/validates/entities/validate.entity";
 
 
 @Injectable()
 export class SchemaService implements OnModuleInit {
-    constructor(private readonly entityRelationService: EntityRelationsService) { }
+    constructor(
+        private readonly entityRelationService: EntityRelationsService,
+        private readonly modelsService: ModelsService
+    ) { }
 
     async onModuleInit() {
         const schemas = [
@@ -63,8 +65,14 @@ export class SchemaService implements OnModuleInit {
             {
                 entity: GenerateApis,
                 collectionName: COLLECTION_NAME.GENERATE_APIS,
+            },
+            {
+                entity: Validates,
+                collectionName: COLLECTION_NAME.VALIDATE,
             }
         ];
+
+        const dynamicModels = await this.modelsService.getDynamicModels()
 
         for (const schema of schemas) {
             const { entity, collectionName } = schema;

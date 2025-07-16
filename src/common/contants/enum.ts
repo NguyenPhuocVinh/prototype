@@ -29,3 +29,20 @@ export enum TENANT_TYPE {
     PRIVATE = 'private',
     PUBLIC = 'public',
 }
+
+
+export enum HTTP_METHOD {
+    GET = 'get',
+    POST = 'post',
+    PUT = 'put',
+    PATCH = 'patch',
+    DELETE = 'delete',
+}
+
+export enum API_TYPE {
+    GET = 'get',
+    GET_LIST = 'get-list',
+    CREATE = 'create',
+    UPDATE = 'update',
+    DELETE = 'delete',
+}

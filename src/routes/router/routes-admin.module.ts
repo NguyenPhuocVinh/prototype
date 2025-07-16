@@ -21,6 +21,8 @@ import { ModelsController } from "src/apis/models/models.controller";
 import { EntityRelationsController } from "src/apis/entity-relations/entity-relations.controller";
 import { GenerateApisModule } from "src/apis/generate-apis/generate-apis.module";
 import { GenerateApisController } from "src/apis/generate-apis/generate-apis.controller";
+import { ValidatesModule } from "src/apis/validates/validates.module";
+import { ValidatesController } from "src/apis/validates/validates.controller";
 
 @Module({
     imports: [
@@ -32,7 +34,8 @@ import { GenerateApisController } from "src/apis/generate-apis/generate-apis.con
         EntityRelationsModule,
         GroupEntitiesModule,
         ModelsModule,
-        GenerateApisModule
+        GenerateApisModule,
+        ValidatesModule
     ],
     controllers: [
         RolesController,
@@ -43,7 +46,8 @@ import { GenerateApisController } from "src/apis/generate-apis/generate-apis.con
         GroupEntitiesController,
         ModelsController,
         EntityRelationsController,
-        GenerateApisController
+        GenerateApisController,
+        ValidatesController
     ],
 })
 

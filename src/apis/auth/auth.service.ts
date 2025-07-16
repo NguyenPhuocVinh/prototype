@@ -4,9 +4,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { CreatedBy } from 'src/common/models/root/created-by-root';
 import { appSettings } from 'src/configs/app.config';
-import { DriversService } from '../ships/drivers/drivers.service';
-import { CreateDriverDto } from '../ships/drivers/dto/create-driver.dto';
-import { Driver } from '../ships/drivers/entities/driver.entity';
 import _ from 'lodash';
 import { Types } from 'mongoose';
 
@@ -15,7 +12,6 @@ import { Types } from 'mongoose';
 export class AuthService {
     constructor(
         private readonly usersService: UsersService,
-        private readonly driversService: DriversService,
         private readonly jwtService: JwtService
     ) { }
 
@@ -99,43 +95,6 @@ export class AuthService {
             }
         };
 
-    }
-
-    async regiserDriver(
-        payload: CreateDriverDto
-    ): Promise<{ data: Partial<Driver> }> {
-        const {
-            phone,
-        } = payload;
-
-        const isExist = await this.driversService.isExist({
-            phone: phone,
-        });
-        if (isExist) throw new UnprocessableEntityException('Driver already exists.');
-        const driver = await this.driversService.create(
-            payload
-        );
-        return {
-            data: driver
-        };
-    }
-
-    async loginDriver(
-        driver: CreatedBy
-    ): Promise<{
-        data: {
-            accessToken: string;
-            refreshToken: string;
-            driver: any
-        }
-    }> {
-        const tokens = await this.getTokens(driver);
-        return {
-            data: {
-                ...tokens,
-                driver
-            }
-        };
     }
 
 

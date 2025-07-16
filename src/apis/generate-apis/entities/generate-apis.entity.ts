@@ -2,13 +2,13 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import _ from "lodash";
 import moment from "moment-timezone";
 import { Document, Types } from "mongoose";
+import { API_TYPE, HTTP_METHOD } from "src/common/contants/enum";
 import { isObjectAndNotEmpty } from "src/common/func-helper/check-valid";
 import { transferValueCreatedBy } from "src/common/func-helper/transfer-vale-relations";
 import { AggregateRootMixin } from "src/common/models/root/aggregate-root";
 import { appSettings } from "src/configs/app.config";
 import { COLLECTION_NAME } from "src/cores/__schema__/configs/enum";
 import { Property } from "src/cores/decorators/property.decorator";
-import { HTTP_METHOD } from "src/cores/event-handler/constants";
 
 @Schema({
     timestamps: {
@@ -32,6 +32,10 @@ export class GenerateApis extends AggregateRootMixin(Document) {
     @Property({ type: String.name })
     @Prop({ type: String, enum: HTTP_METHOD, required: true })
     method: HTTP_METHOD;
+
+    @Property({ type: String.name })
+    @Prop({ type: String, enum: API_TYPE, required: true })
+    type: API_TYPE
 
     @Property({ type: Types.ObjectId.name, ref: COLLECTION_NAME.ENTITY })
     @Prop({ type: Types.ObjectId, ref: COLLECTION_NAME.ENTITY, required: true })

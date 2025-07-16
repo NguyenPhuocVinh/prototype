@@ -15,6 +15,7 @@ export enum COLLECTION_NAME {
     DRIVER_REVIEW = 'driver-reviews',
     ENTITY = 'entities',
     GENERATE_APIS = 'generate-apis',
+    VALIDATE = 'validates',
 }
 
 export enum TENANT_TYPE {
