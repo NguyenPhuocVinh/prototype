@@ -14,6 +14,7 @@ export class BaseRepositoryService<T extends Document> {
 
     async save(data: T, options?: SaveOptions): Promise<T> {
         await data.save(options);
+        await this.handleUpdateEvents(data);
         return data;
     }
 
@@ -119,9 +120,9 @@ export class BaseRepositoryService<T extends Document> {
         filter?: FilterQuery<T>,
         options?: MongooseBaseQueryOptions<T> | null,
     ): Promise<T[]> {
-        const collections = await this.model.find(filter).select('id');
+        const collections = await this.model.find(filter).select('_id');
         const result = await this.model.deleteMany(filter, options);
-        const ids = _.uniq(collections.map((collection) => collection.id));
+        const ids = _.uniq(collections.map((collection) => collection._id));
 
         if (_.size(ids) === 0) {
             return;
@@ -183,18 +184,6 @@ export class BaseRepositoryService<T extends Document> {
                 collectionName: this.collectionName,
             }
         );
-
-        // const locale = _.get(collection, 'locale', null);
-        // if (locale) {
-        //     this.eventEmitter.emit(
-        //         MULTIPLE_LANGUAGES_EVENT_TITLE.UPDATE_DOCUMENT,
-        //         {
-        //             id: collection?.id,
-        //             locale,
-        //             collectionName: this.collectionName,
-        //         },
-        //     );
-        // }
 
         return collection;
     }

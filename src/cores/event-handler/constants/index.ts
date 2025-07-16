@@ -36,9 +36,9 @@ export enum EMBEDDED_TYPE {
 }
 
 export enum QUEUE_TITLE {
-    UPDATE_RELATION_EMBEDDED_ONE_TO_ONE = 'update-relation-embedded-one-to-one',
-    UPDATE_RELATION_EMBEDDED_ONE_TO_MANY = 'update-relation-embedded-one-to-many',
-    UPDATE_RELATION_EMBEDDED_ONE_TO_MANY_PROPERTY = 'update-relation-embedded-one-to-many-property',
+    UPDATE_RELATION_REFERENCE_ONE_TO_ONE = 'update-relation-reference-one-to-one',
+    UPDATE_RELATION_REFERENCE_ONE_TO_MANY = 'update-relation-reference-one-to-many',
+    UPDATE_RELATION_REFERENCE_ONE_TO_MANY_PROPERTY = 'update-relation-reference-one-to-many-property',
     UPDATE_RELATION_EMBEDDED_FILE = 'update-relation-embedded-file',
     UPDATE_RELATION_EMBEDDED_GROUP_FIELD = 'update-relation-embedded-group-field',
     UPDATE_RELATION_EMBEDDED_USER = 'update-relation-embedded-user',
@@ -55,4 +55,20 @@ export enum QUEUE_PROCESSOR_TITLE {
     UPDATE_RELATION_EMBEDDED = 'update-relation-embedded',
     DELETE_RELATION_EMBEDDED = 'delete-relation-embedded',
     AUTO_ADD_COLLECTIONS_FOR_CONDITION = 'auto-add-collections-for-condition',
+}
+
+export enum HTTP_METHOD {
+    GET = 'get',
+    POST = 'post',
+    PUT = 'put',
+    PATCH = 'patch',
+    DELETE = 'delete',
+}
+
+export enum API_TYPE {
+    GET = 'get',
+    GET_LIST = 'get-list',
+    CREATE = 'create',
+    UPDATE = 'update',
+    DELETE = 'delete',
 }

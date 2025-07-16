@@ -189,11 +189,11 @@ export class BaseService<T extends Document> implements IBaseService<T> {
 
     async deletes(ids: string[], ...args: any[]): Promise<any> {
         const session = await this.connection.startSession();
-        const result = await this.model.find({ id: { $in: ids } })
+        const result = await this.model.find({ _id: { $in: ids } })
 
         const transactionHandlerMethod = async () => {
             await this.baseRepositoryService.deleteMany(
-                { id: { $in: ids } },
+                { _id: { $in: ids } },
                 session
             )
         }

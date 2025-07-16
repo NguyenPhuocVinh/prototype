@@ -7,7 +7,7 @@ import { appSettings } from './configs/app.config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { SchemaModule } from './cores/__schema__/schema.module';
 import { CommonModule } from './cores/services/common.module';
-import { BullModule } from '@nestjs/bullmq';
+import { BullModule } from '@nestjs/bull';
 
 const { mongoose, redis, appName } = appSettings;
 @Module({
@@ -23,7 +23,7 @@ const { mongoose, redis, appName } = appSettings;
     }),
     BullModule.forRootAsync({
       useFactory: () => ({
-        connection: {
+        redis: {
           host: redis.host,
           port: redis.port,
           password: redis.password,

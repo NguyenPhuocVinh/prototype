@@ -6,8 +6,10 @@ import { COLLECTION_NAME } from 'src/cores/__schema__/configs/enum';
 import { EntityRelationSchema } from './entities/entity-relation.entity';
 import { UpdateRelationsEvent } from 'src/cores/event-handler/relations/update/update-relations.event';
 import { UpdateRelationsProcessor } from 'src/cores/event-handler/relations/update/update-relations.processor';
-import { BullModule } from '@nestjs/bullmq';
 import { QUEUE_PROCESSOR_TITLE } from 'src/cores/event-handler/constants';
+import { DeleteRelationsEvent } from 'src/cores/event-handler/relations/delete/delete-relations.event';
+import { DeleteRelationsProcessor } from 'src/cores/event-handler/relations/delete/delete-relations.processor';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
@@ -28,7 +30,9 @@ import { QUEUE_PROCESSOR_TITLE } from 'src/cores/event-handler/constants';
   providers: [
     EntityRelationsService,
     UpdateRelationsEvent,
-    UpdateRelationsProcessor
+    UpdateRelationsProcessor,
+    DeleteRelationsEvent,
+    DeleteRelationsProcessor
   ],
   exports: [EntityRelationsService]
 })

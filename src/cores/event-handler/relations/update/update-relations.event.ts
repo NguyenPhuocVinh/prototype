@@ -2,13 +2,13 @@ import { EMBEDDED_TYPE, QUEUE_PROCESSOR_TITLE, QUEUE_TITLE, UPDATE_RELATION_EVEN
 import { Injectable, Logger } from "@nestjs/common";
 import { EntitiesService } from "src/cores/services/entities.service";
 import { InjectConnection } from "@nestjs/mongoose";
-import { InjectQueue } from "@nestjs/bullmq";
-import { Queue } from "bullmq";
 import { OnEvent } from "@nestjs/event-emitter";
 import { EntityRelationsService } from "src/apis/entity-relations/entity-relations.service";
 import _ from "lodash";
 import { relationRootPick } from "src/common/models/root/relation-root";
 import { Connection, Types } from "mongoose";
+import { InjectQueue } from "@nestjs/bull";
+import { Queue } from "bull";
 export interface IRelation {
     [key: string]: string;
     embeddedType: EMBEDDED_TYPE;
@@ -31,16 +31,6 @@ export interface IDeleteRelationQueueItem {
     limit: number;
     skip: number;
 }
-
-export interface IDeleteRelationQueueItem {
-    ids: string[];
-    collectionName: string;
-    slug: string;
-    relation: IRelation;
-    limit: number;
-    skip: number;
-}
-
 export interface UpdateRelationsModel {
     _id: Types.ObjectId;
     collectionName: string;
@@ -166,7 +156,7 @@ export class UpdateRelationsEvent extends EntitiesService {
                 );
                 for (let i = 0; i < skip; i++) {
                     await this.updateRelationQueue.add(
-                        QUEUE_TITLE.UPDATE_RELATION_EMBEDDED_ONE_TO_MANY,
+                        QUEUE_TITLE.UPDATE_RELATION_REFERENCE_ONE_TO_MANY,
                         {
                             _id,
                             collectionName,
@@ -221,7 +211,7 @@ export class UpdateRelationsEvent extends EntitiesService {
                 );
                 for (let i = 0; i < skip; i++) {
                     await this.updateRelationQueue.add(
-                        QUEUE_TITLE.UPDATE_RELATION_EMBEDDED_ONE_TO_ONE,
+                        QUEUE_TITLE.UPDATE_RELATION_REFERENCE_ONE_TO_ONE,
                         {
                             _id,
                             collectionName,
@@ -279,7 +269,7 @@ export class UpdateRelationsEvent extends EntitiesService {
                 );
                 for (let i = 0; i < skip; i++) {
                     await this.updateRelationQueue.add(
-                        QUEUE_TITLE.UPDATE_RELATION_EMBEDDED_ONE_TO_MANY_PROPERTY,
+                        QUEUE_TITLE.UPDATE_RELATION_REFERENCE_ONE_TO_MANY_PROPERTY,
                         {
                             _id,
                             collectionName,

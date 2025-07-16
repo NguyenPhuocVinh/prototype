@@ -4,6 +4,7 @@ import { ModelsService } from './models.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { COLLECTION_NAME } from 'src/cores/__schema__/configs/enum';
 import { EntitySchema } from './entities/model.entity';
+import { EntityRelationsModule } from '../entity-relations/entity-relations.module';
 
 @Module({
   imports: [
@@ -14,9 +15,11 @@ import { EntitySchema } from './entities/model.entity';
           schema: EntitySchema
         }
       ]
-    )
+    ),
+    EntityRelationsModule
   ],
   controllers: [ModelsController],
-  providers: [ModelsService]
+  providers: [ModelsService],
+  exports: [ModelsService]
 })
 export class ModelsModule { }

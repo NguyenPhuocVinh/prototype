@@ -33,6 +33,7 @@ export class Entity extends AggregateRootMixin(Document) {
     @Property({ type: Types.ObjectId.name, ref: COLLECTION_NAME.GROUP_ENTITY })
     @Prop({ type: Types.ObjectId, ref: COLLECTION_NAME.GROUP_ENTITY })
     groupEntity: Types.ObjectId;
+
 }
 
 export const EntitySchema = SchemaFactory.createForClass(Entity);

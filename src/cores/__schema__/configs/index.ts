@@ -67,3 +67,37 @@ export const getEmbeddedType = (fieldName: string, propertyType: any) => {
         return null;
     }
 };
+
+export const relationsJsonSchema = (jsonSchema: any): any[] => {
+    const relations = [];
+
+    if (!jsonSchema?.properties) return relations;
+
+    for (const [key, value] of Object.entries(jsonSchema.properties)) {
+        const field = value as any;
+
+        if (
+            field.type === 'object' &&
+            typeof field.$ref === 'string'
+        ) {
+            const embeddedType = getEmbeddedType(key, 'object');
+            relations.push({
+                [field.$ref]: key,
+                embeddedType,
+            });
+        }
+
+        else if (
+            field.type === 'array' &&
+            field.items?.$ref
+        ) {
+            const embeddedType = getEmbeddedType(key, ['object']);
+            relations.push({
+                [field.items.$ref]: key,
+                embeddedType,
+            });
+        }
+    }
+
+    return relations;
+};

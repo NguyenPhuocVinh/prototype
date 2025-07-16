@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Query, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req } from '@nestjs/common';
 import { GroupEntitiesService } from './group-entities.service';
 import { CreateGroupEntityDto } from './dto/create-group-entity.dto';
 import { Authorize } from 'src/cores/decorators/authorize.decorator';
@@ -48,5 +48,15 @@ export class GroupEntitiesController {
     ) {
         const user = req.user;
         return await this.groupEntitiesService.findAll(pagingDto, user);
+    }
+
+    @Delete(':id')
+    @Authorize()
+    async deleteGroupEntity(
+        @Param('id') id: string,
+        @Req() req: any,
+    ) {
+        const user = req.user;
+        return await this.groupEntitiesService.delete(id, user);
     }
 }

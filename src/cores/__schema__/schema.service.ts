@@ -15,6 +15,7 @@ import { File } from "src/apis/medias/entities/medias.entity";
 import { Entity } from "src/apis/models/entities/model.entity";
 import { GroupEntity } from "src/apis/group-entities/entities/group-entity.entity";
 import { Tenant } from "src/apis/tenants/entities/tenant.entity";
+import { GenerateApis } from "src/apis/generate-apis/entities/generate-apis.entity";
 
 
 @Injectable()
@@ -58,6 +59,10 @@ export class SchemaService implements OnModuleInit {
             {
                 entity: Tenant,
                 collectionName: COLLECTION_NAME.TENANT,
+            },
+            {
+                entity: GenerateApis,
+                collectionName: COLLECTION_NAME.GENERATE_APIS,
             }
         ];
 
