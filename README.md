@@ -1,73 +1,120 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <a href="https://nestjs.com/" target="_blank">
+    <img src="https://nestjs.com/img/logo-small.svg" width="200" alt="NestJS Logo" />
+  </a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<h2 align="center">Dynamic Backend Framework using NestJS</h2>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+<p align="center">
+  🚀 An open-source, scalable backend platform built on <a href="https://nestjs.com">NestJS</a>, designed for dynamic schema management, auto API generation, and project-level backend customization.
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+<p align="center">
+  <a href="https://www.npmjs.com/package/@nestjs/core" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+  <a href="https://www.npmjs.com/package/@nestjs/core" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="License" /></a>
+  <a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="Build Status" /></a>
+  <a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master" alt="Coverage" /></a>
+  <a href="https://discord.gg/nestjs" target="_blank"><img src="https://img.shields.io/discord/520858243488309259?label=discord&logo=discord&color=7289DA" alt="Discord" /></a>
+</p>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Installation
+## 📘 Giới thiệu
+
+Đây là một dự án mã nguồn mở cho phép tạo **hệ thống backend động** sử dụng NestJS. Hệ thống này hỗ trợ:
+
+- ✅ Tạo schema động qua JSON Schema
+- ✅ Tự động sinh Mongoose schema
+- ✅ Tự động sinh API từ cấu trúc entity
+- ✅ Xác thực dữ liệu đầu vào, kiểm tra trường unique
+- ✅ Hỗ trợ `uiSchema` để kết nối với giao diện
+- ✅ Có thể tích hợp xác thực (JWT, Role)
+- 🔜 Hỗ trợ sinh mã backend riêng biệt cho từng project
+- 🔜 Giao diện kéo-thả để quản lý schema (low-code CMS)
+
+---
+
+## 📦 Cài đặt
 
 ```bash
-$ npm install
+npm install
 ```
 
-## Running the app
+## 🚀 Khởi chạy
 
-```bash
-# development
-$ npm run start
+# Chạy development mode
 
-# watch mode
-$ npm run start:dev
+npm run start:dev
 
-# production mode
-$ npm run start:prod
-```
+# Chạy production mode
 
-## Test
+npm run start:prod
 
-```bash
-# unit tests
-$ npm run test
+## 📤 Ví dụ tạo API động
 
-# e2e tests
-$ npm run test:e2e
+{
+"name": "Create Ecommerce User",
+"url": "/api/ecommerce/users",
+"method": "POST",
+"entity": "entityId_from_metadata",
+"requireAuth": true,
+"headers": {
+"Content-Type": "application/json"
+},
+"body": {
+"username": "string",
+"password": "string",
+"email": "string"
+}
+}
 
-# test coverage
-$ npm run test:cov
-```
+## 🧱 Ví dụ JSON Schema
 
-## Support
+{
+"title": "Ecommerce.Users",
+"type": "object",
+"properties": {
+"username": { "type": "string", "unique": true },
+"password": { "type": "string" },
+"email": { "type": "string", "format": "email", "unique": true },
+"role": { "type": "string" }
+},
+"required": ["username", "password", "email"]
+}
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 📑 UI Schema tương ứng
 
-## Stay in touch
+{
+"username": {
+"ui:widget": "text",
+"ui:placeholder": "Enter username"
+},
+"password": {
+"ui:widget": "password",
+"ui:placeholder": "Enter password"
+},
+"email": {
+"ui:widget": "email",
+"ui:placeholder": "Enter email address"
+},
+"role": {
+"ui:widget": "select",
+"ui:placeholder": "Select role",
+"ui:options": {
+"fetchResource": "Role"
+}
+}
+}
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 🔍 Roadmap
 
-## License
-
-Nest is [MIT licensed](LICENSE).
+| Tính năng                                    | Trạng thái  |
+| -------------------------------------------- | ----------- |
+| Dynamic JSON Schema to Mongoose              | ✅ Hoàn tất |
+| UI Schema + Form Rendering                   | 🔜 Sắp tới  |
+| Kiểm tra trường unique                       | 🔜 Sắp tới  |
+| Auto CRUD từ Metadata                        | 🔜 Sắp tới  |
+| Xác thực (JWT, Role, Permission)             | 🔜 Sắp tới  |
+| Sinh mã NestJS module riêng cho từng project | 🔜 Sắp tới  |
+| Giao diện kéo-thả UI builder                 | 🔜 Sắp tới  |
