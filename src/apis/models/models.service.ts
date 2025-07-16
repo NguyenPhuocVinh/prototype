@@ -62,7 +62,6 @@ export class ModelsService extends BaseService<Entity> {
                 required: true,
             },
         };
-        console.log("🚀 ~ ModelsService ~ schemaDefWithRef:", schemaDefWithRef)
 
         const collectionName = slug;
 

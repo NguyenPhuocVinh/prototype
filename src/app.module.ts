@@ -8,6 +8,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { SchemaModule } from './cores/__schema__/schema.module';
 import { CommonModule } from './cores/services/common.module';
 import { BullModule } from '@nestjs/bull';
+import { ValidatorModule } from './cores/__validator__/validator.module';
 
 const { mongoose, redis, appName } = appSettings;
 @Module({
@@ -16,6 +17,7 @@ const { mongoose, redis, appName } = appSettings;
     RouterModule.forRoot(),
     SchemaModule,
     CommonModule,
+    ValidatorModule,
     MongooseModule.forRootAsync({
       useFactory: async () => ({
         uri: mongoose.uri

@@ -88,13 +88,13 @@ export class GenerateApisService extends BaseService<GenerateApis> {
 
         const entity = await this.modelsService.findOne(api.entity.toString())
         const model = await this.modelsService.getModel(entity.data.slug)
-        await this.modelsService.checkValidData(
-            {
-                ...payload,
-                _entity: entity.data._id,
-            },
-            model
-        )
+        // await this.modelsService.checkValidData(
+        //     {
+        //         ...payload,
+        //         _entity: entity.data._id,
+        //     },
+        //     model
+        // )
         const result = await model.create({
             ...payload,
             _entity: entity.data._id,
